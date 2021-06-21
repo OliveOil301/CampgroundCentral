@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import main.java.Camping.GroupManager;
 import main.java.Camping.SiteManager;
 
+import java.io.FileNotFoundException;
+
 
 public class App extends Application {
 
@@ -25,7 +27,15 @@ public class App extends Application {
 
     //Public things:
     public static SiteManager siteManager = new SiteManager();
-    public static GroupManager groupManager = new GroupManager();
+    public static GroupManager groupManager;
+
+    static {
+        try {
+            groupManager = new GroupManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public static App getInstance(){

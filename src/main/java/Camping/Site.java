@@ -9,7 +9,6 @@ public class Site {
 
 
     public Site(Group siteGroup, Integer siteNumber) throws InvalidSiteException {
-
         if(App.groupManager.containsGroup(siteGroup)){
             this.siteGroup = siteGroup;
             this.siteNumber = siteNumber;
