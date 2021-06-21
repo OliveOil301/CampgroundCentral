@@ -8,8 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-
-
+import main.java.Camping.GroupManager;
+import main.java.Camping.SiteManager;
 
 
 public class App extends Application {
@@ -20,9 +20,12 @@ public class App extends Application {
     public static Stage newReservationStage;//Thi sis the stage for the new reservation window that may pop up
     public static Integer newReservationWindows = 0;
 
-
-
     public static App app_instance = null;
+
+
+    //Public things:
+    public static SiteManager siteManager = new SiteManager();
+    public static GroupManager groupManager = new GroupManager();
 
 
     public static App getInstance(){
