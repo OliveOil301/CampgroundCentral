@@ -1,7 +1,7 @@
 package main.java.Camping;
 
 public class Group {
-    String groupName;
+    private String groupName;
 
     public Group(String groupName) {
         this.groupName = groupName;

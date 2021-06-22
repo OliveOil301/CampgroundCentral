@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GroupManager {
-    ArrayList<Group> groups;
+    private ArrayList<Group> groups;
 
     public GroupManager() throws IOException {
         String line;
@@ -33,5 +33,15 @@ public class GroupManager {
             }
         }
         return false;
+    }
+
+
+    public Group getGroupFromString(String groupName){
+        for (Group g:this.groups) {
+            if(g.getgroupName().equals(groupName)){
+                return g;
+            }
+        }
+        return null;//If there isn't a group with that name
     }
 }

@@ -4,8 +4,8 @@ import main.java.App;
 import main.java.Exceptions.InvalidSiteException;
 
 public class Site {
-    Group siteGroup;
-    Integer siteNumber;
+    private Group siteGroup;
+    private Integer siteNumber;
 
 
     public Site(Group siteGroup, Integer siteNumber) throws InvalidSiteException {

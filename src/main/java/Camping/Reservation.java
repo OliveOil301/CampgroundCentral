@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Reservation {
-    Float reservationNumber;
-    LocalDate startDate;
-    LocalDate endDate;
-    String[] Name;
-    Site reservationSite;
-    ArrayList<String[]> guests;
+    private Float reservationNumber;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String[] Name;
+    private Site reservationSite;
+    private ArrayList<String[]> guests;
 
 
     //Getters below here--------

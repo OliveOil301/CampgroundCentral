@@ -26,12 +26,13 @@ public class App extends Application {
 
 
     //Public things:
-    public static SiteManager siteManager = new SiteManager();
+    public static SiteManager siteManager;
     public static GroupManager groupManager;
 
     static {
         try {
-            groupManager = new GroupManager();
+            groupManager = new GroupManager();//The GroupManager needs to be made first so the siteManager can check against that.
+            siteManager = new SiteManager();
         } catch (Exception e) {
             e.printStackTrace();
         }
