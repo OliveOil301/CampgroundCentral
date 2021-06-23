@@ -15,7 +15,7 @@ public class SiteManager {
         String line;
         String splitBy = ",";
         //parsing a CSV file into BufferedReader class constructor
-        BufferedReader br = new BufferedReader(new FileReader("src/main/resources/storage/Sites.csv"));
+        BufferedReader br = new BufferedReader(new FileReader("src/main/resources/storage/GroupsAndSites.csv"));
 
         //This is for filling up the Group list
         ArrayList<Site> listOfSites = new ArrayList<>();

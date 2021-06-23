@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import main.java.Camping.Group;
 import main.java.Camping.GroupManager;
 import main.java.Camping.SiteManager;
 

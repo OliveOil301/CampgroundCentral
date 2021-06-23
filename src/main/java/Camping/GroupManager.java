@@ -1,5 +1,7 @@
 package main.java.Camping;
 
+import main.java.Utilities.CSVManager;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,7 +15,7 @@ public class GroupManager {
         String line;
         String splitBy = ",";
         //parsing a CSV file into BufferedReader class constructor
-        BufferedReader br = new BufferedReader(new FileReader("src/main/resources/storage/Sites.csv"));
+        BufferedReader br = new BufferedReader(new FileReader("src/main/resources/storage/GroupsAndSites.csv"));
 
         //This is for filling up the Group list
         ArrayList<Group> listOfGroups = new ArrayList<>();
@@ -43,5 +45,15 @@ public class GroupManager {
             }
         }
         return null;//If there isn't a group with that name
+    }
+
+    public void newGroup(Group g) throws IOException {
+        CSVManager CSVM = new CSVManager("src/main/resources/storage/GroupsAndSites.csv");
+        String[] Item = new String[2];
+        Item[0] = g.getgroupName();
+        Item[1] = String.valueOf(g.getNumberOfSites());
+
+        CSVM.AddToEndOfCSV(Item);
+
     }
 }
