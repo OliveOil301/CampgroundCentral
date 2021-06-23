@@ -3,18 +3,19 @@ package main.java.Camping;
 import main.java.App;
 import main.java.Exceptions.InvalidSiteException;
 
+import java.util.ArrayList;
+
 public class Site {
-    private Group siteGroup;
-    private Integer siteNumber;
+    //private Group siteGroup;
+    private String Site;
+    private ArrayList<Reservation> listOfReservations;
 
+    public Site(String site, ArrayList<Reservation> listOfReservations) {
+        Site = site;
+        this.listOfReservations = listOfReservations;
+    }
 
-    public Site(Group siteGroup, Integer siteNumber) throws InvalidSiteException {
-        if(App.groupManager.containsGroup(siteGroup)){
-            this.siteGroup = siteGroup;
-            this.siteNumber = siteNumber;
-        } else {
-            throw new InvalidSiteException("The group you inputted does not exist. Please try again with a valid group.");
-        }
-
+    public Site(String site) {
+        Site = site;
     }
 }

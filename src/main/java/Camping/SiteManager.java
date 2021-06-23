@@ -7,6 +7,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+
+/*
+ * NOTE: This class may be getting deleted!!! the new organization scheme may not involve this.
+ *
+ */
 public class SiteManager {
     private ArrayList<Site> sites;
     private GroupManager groupManager = new GroupManager();
@@ -22,7 +28,7 @@ public class SiteManager {
         while ((line = br.readLine()) != null) {
             String[] csvLine = line.split(splitBy);// use comma as separator to split the group and amounts for the group
             for(int i = 1; i <= Integer.parseInt(csvLine[1]); i++){
-                Site newSite = new Site(groupManager.getGroupFromString(csvLine[0]), i);
+                Site newSite = new Site(csvLine[0]);
                 listOfSites.add(newSite);
             }
         }

@@ -13,7 +13,8 @@ public class ReservationManager {
 
      private ArrayList<Reservation> allReservations;
 
-     private ArrayList<ArrayList<Reservation>> reservationsByGroup;
+
+     private ArrayList<ArrayList<ArrayList<Reservation>>> reservationsByGroupBySite;
 
 
 

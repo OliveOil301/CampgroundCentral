@@ -4,7 +4,6 @@ import main.java.Exceptions.InvalidGroupException;
 import main.java.Utilities.CSVManager;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class GroupManager {
 
     public boolean containsGroup(Group potentialGroup){
         for (Group g:groups) {
-            if(g.getgroupName().equals(potentialGroup.getgroupName())){
+            if(g.getGroupName().equals(potentialGroup.getGroupName())){
                 return true;
             }
         }
@@ -41,7 +40,7 @@ public class GroupManager {
 
     public Group getGroupFromString(String groupName){
         for (Group g:this.groups) {
-            if(g.getgroupName().equals(groupName)){
+            if(g.getGroupName().equals(groupName)){
                 return g;
             }
         }
@@ -51,8 +50,8 @@ public class GroupManager {
     public void newGroup(Group g) throws InvalidGroupException {
         CSVManager CSVM = new CSVManager("src/main/resources/storage/GroupsAndSites.csv");
         String[] Item = new String[2];
-        Item[0] = g.getgroupName();
-        Item[1] = String.valueOf(g.getNumberOfSites());
+        Item[0] = g.getGroupName();
+        //Item[1] = String.valueOf(g.getNumberOfSites()); Need to change this because a group no longer stores an amount of the sites, it stores the list of sites.
 
 
         if(this.containsGroup(g)){

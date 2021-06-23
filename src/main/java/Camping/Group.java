@@ -1,28 +1,33 @@
 package main.java.Camping;
 
+import java.util.ArrayList;
+
 public class Group {
     private String groupName;
-    private Integer numberOfSites;
+    private ArrayList<Site> sitesInGroup;
 
     public Group(String groupName) {
         this.groupName = groupName;
-        this.numberOfSites = 1;
     }
 
-    public Group(String groupName, Integer numberOfSites) {
+    public Group(String groupName, ArrayList<Site> sitesInGroup) {
         this.groupName = groupName;
-        this.numberOfSites = numberOfSites;
+        this.sitesInGroup = sitesInGroup;
     }
 
-    public String getgroupName(){
+    public String getGroupName(){
         return groupName;
     }
 
-    public void setNumberOfSites(Integer numberOfSites){
-        this.numberOfSites = numberOfSites;
+    public void setSitesInGroup(ArrayList<Site> sitesInGroup){
+        this.sitesInGroup = sitesInGroup;
+    }
+
+    public ArrayList<Site> getSitesInGroup(){
+        return this.sitesInGroup;
     }
 
     public Integer getNumberOfSites(){
-        return this.numberOfSites;
+        return this.sitesInGroup.size();
     }
 }
