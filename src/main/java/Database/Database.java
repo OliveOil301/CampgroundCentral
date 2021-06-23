@@ -75,20 +75,12 @@ public class Database {
 
                 PreparedStatement ps1 = conn.prepareStatement(tbl1);
                 ps1.execute();
-                String tbl2 =
-                        "create table Edges (edgeID varchar(50) not null, startID varchar(50), endID varchar(50), primary key(edgeID))";
-                PreparedStatement ps2 = conn.prepareStatement(tbl2);
-                ps2.execute();
-
-                String tbl3 = "create table Users (requestID varchar(50) not null ,  type varchar(50), dateNeeded timestamp, specificData varchar(250), resolved boolean, primary key(requestID))";
-                PreparedStatement ps3 = conn.prepareStatement(tbl3);
-                ps3.execute();
 
                 String tbl4 =
                         "create table Users (employeeID varchar(50) not null, name varchar(50), password varchar(100), email varchar(250), type varchar(50), phoneNumber varchar(100), deleted boolean, primary key(employeeID))";
                 PreparedStatement ps4 = conn.prepareStatement(tbl4);
                 ps4.execute();
-
+                //---------------------------------------------------
                 String tbl7 =
                         "create table Guests (guestID varchar(50) not null, name varchar(50), visitDate timestamp, visitReason varchar(250), deleted boolean, primary key(guestID))";
                 PreparedStatement ps7 = conn.prepareStatement(tbl7);
