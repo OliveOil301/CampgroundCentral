@@ -1,5 +1,6 @@
 package main.java.Camping;
 
+import main.java.Exceptions.InvalidGroupException;
 import main.java.Utilities.CSVManager;
 
 import java.io.BufferedReader;
@@ -47,13 +48,21 @@ public class GroupManager {
         return null;//If there isn't a group with that name
     }
 
-    public void newGroup(Group g) throws IOException {
+    public void newGroup(Group g) throws InvalidGroupException {
         CSVManager CSVM = new CSVManager("src/main/resources/storage/GroupsAndSites.csv");
         String[] Item = new String[2];
         Item[0] = g.getgroupName();
         Item[1] = String.valueOf(g.getNumberOfSites());
 
-        CSVM.AddToEndOfCSV(Item);
 
+        if(this.containsGroup(g)){
+            throw new InvalidGroupException("This group already exists. \nPlease modify it if you would like to change the number of sites. \nError Message 247");
+        }
+        try {
+            CSVM.AddToEndOfCSV(Item);
+        } catch(IOException e){
+            throw new InvalidGroupException("The group could not be added. \nError Message 248");
+        }
+        this.groups.add(g);
     }
 }
