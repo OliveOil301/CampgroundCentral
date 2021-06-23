@@ -80,12 +80,12 @@ public class Database {
                 PreparedStatement ps2 = conn.prepareStatement(tbl2);
                 ps2.execute();
 
-                String tbl3 = "create table Requests (requestID varchar(50) not null ,  type varchar(50), dateNeeded timestamp, specificData varchar(250), resolved boolean, primary key(requestID))";
+                String tbl3 = "create table Users (requestID varchar(50) not null ,  type varchar(50), dateNeeded timestamp, specificData varchar(250), resolved boolean, primary key(requestID))";
                 PreparedStatement ps3 = conn.prepareStatement(tbl3);
                 ps3.execute();
 
                 String tbl4 =
-                        "create table Employees (employeeID varchar(50) not null, name varchar(50), userName varchar(100), password varchar(100), email varchar(250), type varchar(50), phoneNumber varchar(100), locationNodeID varchar(50) references Nodes, deleted boolean, preferredContactMethod varchar(50), primary key(employeeID))";
+                        "create table Users (employeeID varchar(50) not null, name varchar(50), password varchar(100), email varchar(250), type varchar(50), phoneNumber varchar(100), deleted boolean, primary key(employeeID))";
                 PreparedStatement ps4 = conn.prepareStatement(tbl4);
                 ps4.execute();
 
