@@ -4,6 +4,11 @@ Here is a list of error codes that could be thrown by exceptions and other error
 
 
 
+
+
+
+246: Group.addSite
+    You tried to add a site that is already in the group (the names were the same).
 247: GroupManager.newGroup
     The ArrayList that stores the list of groups already contains the group that is trying to be added, or at least a group with that name. Duplicates may not be added.
 248: GroupManager.newGroup

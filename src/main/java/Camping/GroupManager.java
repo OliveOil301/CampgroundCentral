@@ -55,13 +55,21 @@ public class GroupManager {
 
 
         if(this.containsGroup(g)){
-            throw new InvalidGroupException("This group already exists. \nPlease modify it if you would like to change the number of sites. \nError Message 247");
+            throw new InvalidGroupException("This group already exists.\nPlease modify it if you would like to change the number of sites.\nError message 247");
         }
         try {
             CSVM.AddToEndOfCSV(Item);
         } catch(IOException e){
-            throw new InvalidGroupException("The group could not be added. \nError Message 248");
+            throw new InvalidGroupException("The group could not be added.\nError message 248");
         }
+
+
         this.groups.add(g);
     }
+
+
+
+
+
+
 }
