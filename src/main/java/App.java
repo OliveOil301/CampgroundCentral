@@ -1,18 +1,12 @@
 package main.java;
 
 import javafx.application.Application;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import main.java.Camping.Group;
 import main.java.Camping.GroupManager;
-import main.java.Camping.SiteManager;
-
-import java.io.FileNotFoundException;
 
 
 public class App extends Application {
@@ -27,13 +21,11 @@ public class App extends Application {
 
 
     //Public things:
-    public static SiteManager siteManager;
     public static GroupManager groupManager;
 
     static {
         try {
             groupManager = new GroupManager();//The GroupManager needs to be made first so the siteManager can check against that.
-            siteManager = new SiteManager();
         } catch (Exception e) {
             e.printStackTrace();
         }

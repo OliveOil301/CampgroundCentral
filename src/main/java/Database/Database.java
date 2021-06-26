@@ -71,7 +71,7 @@ public class Database {
         try {
             if (isTableEmpty()) {
                 String tbl1 =
-                        "create table Sites (siteName varchar(50) not null, siteNumber varchar(50) not null, siteType varchar(50) not null, reservations varchar(50), building varchar(50), nodeType varchar(4), longName varchar(50), shortName varchar(20), teamAssigned varchar(50), primary key (nodeID))";
+                        "create table Sites (siteName varchar(50) not null, siteType varchar(50) not null, primary key (siteName))";
 
                 PreparedStatement ps1 = conn.prepareStatement(tbl1);
                 ps1.execute();
