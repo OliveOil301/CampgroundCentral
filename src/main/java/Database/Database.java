@@ -10,7 +10,7 @@ public class Database {
     // Url for live code
     private final static String url = "jdbc:derby:CCDB;create=true";
     // Url for testing
-    private final static String testURL = "jdbc:derby://localhost:1527/BWdb;create=true";
+    private final static String testURL = "jdbc:derby://localhost:1527/CCDB;create=true";
 
     /**
      *  Constructor for database that is used for DB
@@ -81,8 +81,9 @@ public class Database {
                 PreparedStatement ps4 = conn.prepareStatement(tbl4);
                 ps4.execute();
                 //---------------------------------------------------
+                //This is a table where information needed on startup is stored.
                 String tbl7 =
-                        "create table Guests (guestID varchar(50) not null, name varchar(50), visitDate timestamp, visitReason varchar(250), deleted boolean, primary key(guestID))";
+                        "create table Information (currentReservationNumber varchar(50) not null, name varchar(50), visitDate timestamp, visitReason varchar(250), deleted boolean, primary key(guestID))";
                 PreparedStatement ps7 = conn.prepareStatement(tbl7);
                 ps7.execute();
                 // TODO : REQUEST WILL HAVE PARKING LOCATION
