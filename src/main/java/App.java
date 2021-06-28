@@ -10,6 +10,8 @@ import main.java.Camping.GroupManager;
 import main.java.Database.Database;
 import main.java.Database.SiteData;
 
+import java.io.IOException;
+
 
 public class App extends Application {
 
@@ -23,10 +25,17 @@ public class App extends Application {
 
 
     //Public things:
-    public static GroupManager groupManager;
     public static Database database = new Database();
     public static SiteData siteData = new SiteData();
+    public static GroupManager groupManager;
 
+    static {
+        try {
+            groupManager = siteData.getAllSites();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public static App getInstance(){

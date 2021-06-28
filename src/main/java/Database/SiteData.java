@@ -52,7 +52,7 @@ public class SiteData {
         }
     }
 
-    public ArrayList<Site> getSitesByGroup(String groupName){
+    public ArrayList<Site> getAllSites(String groupName){
         ArrayList<Site> sites = new ArrayList<>();
 
 
@@ -95,9 +95,10 @@ public class SiteData {
         System.out.println("WE LOADED EVERYTHING!!");
     }
 
-    public GroupManager getSitesByGroup() throws IOException {
+    public GroupManager getAllSites() throws IOException {
         GroupManager allSites = new GroupManager();
-        String str = "select * from Sites order by siteGroup ASC";
+        //order by siteGroup ASC
+        String str = "select * from Sites";
         try{
             PreparedStatement ps = conn.prepareStatement(str);
             ResultSet rs = ps.executeQuery();
@@ -110,6 +111,7 @@ public class SiteData {
 
                 Site s = new Site(siteData[0], siteData[1], siteData[2]);
                 allSites.addSite(s);
+                System.out.println(s.getSiteName() + " was added to the groupManager");
 
             }
             rs.close();

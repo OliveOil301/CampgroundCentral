@@ -12,21 +12,9 @@ public class GroupManager {
     private ArrayList<Group> groups;
 
     public GroupManager() throws IOException {
-//        String line;
-//        String splitBy = ",";
-//        //parsing a CSV file into BufferedReader class constructor
-//        BufferedReader br = new BufferedReader(new FileReader("src/main/resources/storage/GroupsAndSites.csv"));
-//
-//        //This is for filling up the Group list
-//        ArrayList<Group> listOfGroups = new ArrayList<>();
-//        while ((line = br.readLine()) != null) {
-//            String[] csvLine = line.split(splitBy);    // use comma as separator to split the group and amounts for the group
-//            Group newGroup = new Group(csvLine[0]);
-//            listOfGroups.add(newGroup);
-//        }
-//
-//        this.groups = listOfGroups;
+        this.groups = new ArrayList<Group>();
     }
+
 
     public boolean containsGroup(Group potentialGroup){
         for (Group g:groups) {
@@ -37,6 +25,9 @@ public class GroupManager {
         return false;
     }
 
+    public ArrayList<Group> getGroups() {
+        return groups;
+    }
 
     public Group getGroupFromString(String groupName){
         for (Group g:this.groups) {

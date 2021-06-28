@@ -17,6 +17,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import main.java.App;
+import main.java.Camping.Group;
+import main.java.Camping.Site;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -68,86 +70,83 @@ public class SchedulingPageController {
         BufferedReader br = new BufferedReader(new FileReader("src/main/resources/storage/Sites.csv"));
 
         //This first while is for filling up the site list on the left. It makes the headers, sites, whether it is open, and the hookup type
-        while ((line = br.readLine()) != null)
-        {
-            String[] site = line.split(splitBy);    // use comma as separator and split area name and area number
 
-            /* This is for the headers
-             *  This makes the header and the additional spacer so it looks nicer
-             */
-            if(!prevArea.equals(site[0])){//If this is the beginning of a new set of sites
-                System.out.println(prevArea + "| - - |" + site[0] + "|");
-                Separator newSeparator = new Separator();//This is the separator for the label
-                newSeparator.setId("New Separator " + site[0]);
-                newSeparator.setPrefWidth(350);
+        for (Group g:App.groupManager.getGroups()) {
 
-                Label newArea = new Label();
-                newArea.setText(site[0]);
-                newArea.setPrefHeight(40);
-                newArea.setPadding(new Insets(5,0,-2,10));
-                newArea.setId(site[0] + " Title");
-                newArea.setFont(Font.font("System", FontWeight.BOLD, 36));
+            //This creates the title section for the new group
+            Site site1 = g.getSitesInGroup().get(0);
+            System.out.println();
+            System.out.println(prevArea + "| - - |" + site1.getGroupName() + "|");
+            Separator newSeparator = new Separator();//This is the separator for the label
+            newSeparator.setId("New Separator " + site1.getGroupName());
+            newSeparator.setPrefWidth(350);
 
-                LocationBox.getChildren().add(newSeparator);//These actually add the formatted label and separator
-                LocationBox.getChildren().add(newArea);
+            //This is the actual label for the new group
+            Label newArea = new Label();
+            newArea.setText(site1.getGroupName());
+            newArea.setPrefHeight(40);
+            newArea.setPadding(new Insets(5,0,-2,10));
+            newArea.setId(site1.getGroupName() + " Title");
+            newArea.setFont(Font.font("System", FontWeight.BOLD, 36));
+
+            //This is adding the separator and label to the VBox that holds everything in this section
+            LocationBox.getChildren().add(newSeparator);//These actually add the formatted label and separator
+            LocationBox.getChildren().add(newArea);
+
+            //This foreach loop adds all the sites to the VBox on the left
+            for (Site s:g.getSitesInGroup()) {
+                HBox box1 = new HBox();
+
+                //This is the main label
+                System.out.println(s.getSiteName() + "HELLO-------------------------");
+                Label siteLabel = new Label();
+                siteLabel.setText(s.getSiteName());
+                siteLabel.setPrefHeight(28);
+                siteLabel.setPrefWidth(145);
+                siteLabel.setPadding(new Insets(2,0,0,10));
+                siteLabel.setId(s.getSiteName());
+                siteLabel.setFont(new Font("System", 26));
+
+                //This is the site-type thing that may be able to be used to sort.
+                Button typeLabel = new Button();
+                typeLabel.setText(s.getSiteType());
+                typeLabel.setFont(new Font("System", 22));
+                typeLabel.setPadding(new Insets(0,5,0,5));
+                typeLabel.setPrefWidth(80);
+                switch (s.getSiteType()){
+                    case "Full-50":
+                        typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.314,0.72,0.325, 1), new CornerRadii(3), new Insets(0,0,0,0))));
+                        siteLabel.getWidth();
+                        break;
+                    case "Full-30":
+                        typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.1568,0.4509,0.169, 1), new CornerRadii(3), new Insets(0,0,0,0))));
+                        break;
+                    case "W & E":
+                        typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.427,0.91,0.92, 1), new CornerRadii(3), new Insets(0,0,0,0))));
+                        break;
+                    case "Tent":
+                        typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.878,0.243,0.243, 1), new CornerRadii(3), new Insets(0,0,0,0))));
+                        break;
+                    case "Rental":
+                        typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.651,0.651,0.651, 1), new CornerRadii(3), new Insets(0,0,0,0))));
+                        break;
+                }
+                box1.setSpacing(100);
+                box1.setAlignment(Pos.CENTER_LEFT);
+
+
+                //This is the separator for the label and button
+                Separator separator = new Separator();
+                separator.setId("Separator " + s.getSiteName());
+                separator.setPrefWidth(350);
+
+
+                box1.getChildren().add(siteLabel);
+                box1.getChildren().add(typeLabel);
+                LocationBox.getChildren().add(separator);
+                LocationBox.getChildren().add(box1);
             }
-
-            HBox box1 = new HBox();
-
-            //This is the main label
-            Label siteLabel = new Label();
-            siteLabel.setText(site[0] + " " + site[1]);
-            siteLabel.setPrefHeight(28);
-            siteLabel.setPrefWidth(145);
-            siteLabel.setPadding(new Insets(2,0,0,10));
-            siteLabel.setId(site[0] + " " + site[1]);
-            siteLabel.setFont(new Font("System", 26));
-
-            //This is the site-type thing that may be able to be used to sort.
-            Button typeLabel = new Button();
-            typeLabel.setText(site[2]);
-            typeLabel.setFont(new Font("System", 22));
-            typeLabel.setPadding(new Insets(0,5,0,5));
-            typeLabel.setPrefWidth(80);
-            switch (site[2]){
-                case "Full-50":
-                    typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.314,0.72,0.325, 1), new CornerRadii(3), new Insets(0,0,0,0))));
-                    siteLabel.getWidth();
-                    break;
-                case "Full-30":
-                    typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.1568,0.4509,0.169, 1), new CornerRadii(3), new Insets(0,0,0,0))));
-                    break;
-                case "W & E":
-                    typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.427,0.91,0.92, 1), new CornerRadii(3), new Insets(0,0,0,0))));
-                    break;
-                case "Tent":
-                    typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.878,0.243,0.243, 1), new CornerRadii(3), new Insets(0,0,0,0))));
-                    break;
-                case "Rental":
-                    typeLabel.setBackground(new Background(new BackgroundFill(new Color(0.651,0.651,0.651, 1), new CornerRadii(3), new Insets(0,0,0,0))));
-                    break;
-            }
-            box1.setSpacing(100);
-            box1.setAlignment(Pos.CENTER_LEFT);
-
-
-            //This is the separator for the label and button
-            Separator separator = new Separator();
-            separator.setId("Separator " + site[0] + " " + site[1]);
-            separator.setPrefWidth(350);
-
-
-            box1.getChildren().add(siteLabel);
-            box1.getChildren().add(typeLabel);
-            LocationBox.getChildren().add(separator);
-            LocationBox.getChildren().add(box1);
-            prevArea = site[0];//This is for the location titles above the specific types of sites
-
-            //End of Left-Hand side with the sites and their type----------------------------------------------------------------
-
-
         }
-
 
         LocalDate endingDate = date.plusDays(daysToDisplay+1);
 
@@ -264,150 +263,150 @@ public class SchedulingPageController {
 
 
 
-        BufferedReader br2 = new BufferedReader(new FileReader("src/main/resources/storage/Sites.csv"));
-        String line2;
-
-        String prevArea1 = "";
-        //This while loop is for filling up the reservation loop.
-        while ((line2 = br2.readLine()) != null) {
-            String[] site = line2.split(splitBy);
-            if(site.length >3){
-                if(!prevArea1.equals(site[0])){//If this is the beginning of a new set of sites
-                    Separator newSeparator = new Separator();//This is the separator for the label
-                    newSeparator.setId("New Separator " + site[0]);
-                    newSeparator.setPrefWidth(350);
-
-                    Label newArea = new Label();
-                    newArea.setText(site[0]);
-                    newArea.setPrefHeight(40);
-                    newArea.setPadding(new Insets(5,0,-2,10));
-                    newArea.setId(site[0] + " Title");
-                    newArea.setFont(Font.font("System", FontWeight.BOLD, 36));
-
-                    mainReservationVBox.getChildren().add(newSeparator);
-                    mainReservationVBox.getChildren().add(newArea);
-
-//                    LocationBox.getChildren().add(newSeparator);//These actually add the formatted label and separator
-//                    LocationBox.getChildren().add(newArea);
-                }
-
-
-
-                HBox siteReservations = new HBox();
-                double totalReservationsLength = 0;
-                LocalDate lastDate = LocalDate.now();
-                double buttonHeight = 37;
-                for(int i = 3; i<=site.length; i++) {
-                    if(i != site.length){
-                        String split = "#";
-                        String[] reservation = site[i].split(split);
-
-
-                        //Date shit
-                        String[] startDate = reservation[1].split("-");
-                        String[] endDate = reservation[2].split("-");
-                        LocalDate reservationStart;
-                        LocalDate reservationEnd;
-                        System.out.println(site[i]);
-                        System.out.println(Arrays.toString(reservation));
-                        reservationStart = LocalDate.of(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]));
-                        reservationEnd = LocalDate.of(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]));
-
-                        LocalDate today = LocalDate.now();
-
-                        int reservationLength;
-                        if (reservationStart.isBefore(today)) {
-                            reservationLength = dateDifference(today, reservationEnd) + 1;
-                        } else {
-                            reservationLength = dateDifference(reservationStart, reservationEnd) + 1;
-                        }
-                        System.out.println("THE LENGTH OF THE RESERVATION IS " + reservationLength);
-
-
-                        //If there is a gap in between reservations--
-                        if (lastDate.isBefore(reservationStart) && dateDifference(lastDate, reservationStart) > 1) {
-                            HBox emptyReservationBox = new HBox();
-                            Button emptyReservationButton = new Button();
-                            int emptyReservationLength = dateDifference(lastDate, reservationStart) - 1;
-                            if (emptyReservationLength <= 1) {
-                                emptyReservationButton.setText("");
-                            } else {
-                                emptyReservationButton.setText("Open");
-                            }
-                            emptyReservationButton.setBackground(new Background(new BackgroundFill(new Color(0.314, 0.72, 0.325, 1), new CornerRadii(3), new Insets(0, 0, 0, 0))));
-                            double emptyReservationTotalLength = (emptyReservationLength * 37.35) - 10.0;
-                            emptyReservationButton.setPrefSize((emptyReservationTotalLength), buttonHeight);
-                            emptyReservationBox.setPadding(new Insets(3, 3, 3, 3));
-                            emptyReservationBox.getChildren().add(emptyReservationButton);
-                            siteReservations.getChildren().add(emptyReservationBox);
-                            System.out.println("THE LENGTH OF THE EMPTY **** RESERVATION IS " + emptyReservationLength);
-                            totalReservationsLength += emptyReservationTotalLength + 6;
-
-                        }
-
-                        //more reservation formatting---
-                        HBox reservationBox = new HBox();
-                        Button reservationButton = new Button();
-                        if (reservationLength == 1) {
-                            reservationButton.setText("");
-                        } else if (reservationLength <= 2) {
-                            reservationButton.setText(reservation[0]);
-                        } else if (reservationLength <= 3) {
-                            reservationButton.setText("Res #" + reservation[0]);
-                        }else {
-                            reservationButton.setText("Reservation #" + reservation[0]);
-                        }
-                        reservationButton.setBackground(new Background(new BackgroundFill(new Color(0.878, 0.243, 0.243, 1), new CornerRadii(3), new Insets(0, 0, 0, 0))));
-                        double totalLength = (reservationLength * 36.04)-7.2;
-                        reservationButton.setPrefSize(totalLength, buttonHeight);
-                        reservationBox.setPadding(new Insets(3, 3, 3, 3));
-                        reservationBox.getChildren().add(reservationButton);
-
-                        siteReservations.getChildren().add(reservationBox);
-                        lastDate = reservationEnd;
-                        totalReservationsLength += totalLength + 6;
-
-                    } else {//If we have reached the end of the reservations
-                        String split = "#";
-                        String[] reservation = site[i-1].split(split);
-
-
-                        //Date shit
-                        String[] startDate1 = reservation[1].split("-");
-                        String[] endDate1 = reservation[2].split("-");
-                        LocalDate lastReservationStart;
-                        LocalDate lastReservationEnd;
-                        System.out.println(site[i-1]);
-                        System.out.println(Arrays.toString(reservation));
-                        lastReservationStart = LocalDate.of(Integer.parseInt(startDate1[2]), Integer.parseInt(startDate1[0]), Integer.parseInt(startDate1[1]));
-                        lastReservationEnd = LocalDate.of(Integer.parseInt(endDate1[2]), Integer.parseInt(endDate1[0]), Integer.parseInt(endDate1[1]));
-                        if(lastReservationEnd.isBefore(endingDate)){
-                            HBox emptyReservationBox = new HBox();
-                            Button emptyReservationButton = new Button();
-                            int emptyReservationLength = dateDifference(lastReservationEnd, endingDate);
-                            if (emptyReservationLength <= 1) {
-                                emptyReservationButton.setText("");
-                            } else {
-                                emptyReservationButton.setText("Open");
-                            }
-                            emptyReservationButton.setBackground(new Background(new BackgroundFill(new Color(0.314, 0.72, 0.325, 1), new CornerRadii(3), new Insets(0, 0, 0, 0))));
-                            emptyReservationButton.setPrefSize(((daysToDisplay*36)-totalReservationsLength)-22, buttonHeight);
-                            emptyReservationBox.setPadding(new Insets(3, 3, 3, 3));
-                            emptyReservationBox.getChildren().add(emptyReservationButton);
-                            siteReservations.getChildren().add(emptyReservationBox);
-                            System.out.println("THE LENGTH OF THE EMPTY **** RESERVATION IS " + emptyReservationLength + " AND THE WIDTH IS supposed to be " + emptyReservationButton.getPrefWidth() + " But the actual width is " + emptyReservationButton.getWidth());
-                            reservationAnchorPane.setPrefWidth(daysToDisplay*36);
-                        }
-
-
-
-                    }
-                }
-                prevArea1 = site[0];//This is for the location titles above the specific types of sites
-                mainReservationVBox.getChildren().add(siteReservations);
-            }
-
-        }
+//        BufferedReader br2 = new BufferedReader(new FileReader("src/main/resources/storage/Sites.csv"));
+//        String line2;
+//
+//        String prevArea1 = "";
+//        //This while loop is for filling up the reservation loop.
+//        while ((line2 = br2.readLine()) != null) {
+//            String[] site = line2.split(splitBy);
+//            if(site.length >3){
+//                if(!prevArea1.equals(site[0])){//If this is the beginning of a new set of sites
+//                    Separator newSeparator = new Separator();//This is the separator for the label
+//                    newSeparator.setId("New Separator " + site[0]);
+//                    newSeparator.setPrefWidth(350);
+//
+//                    Label newArea = new Label();
+//                    newArea.setText(site[0]);
+//                    newArea.setPrefHeight(40);
+//                    newArea.setPadding(new Insets(5,0,-2,10));
+//                    newArea.setId(site[0] + " Title");
+//                    newArea.setFont(Font.font("System", FontWeight.BOLD, 36));
+//
+//                    mainReservationVBox.getChildren().add(newSeparator);
+//                    mainReservationVBox.getChildren().add(newArea);
+//
+////                    LocationBox.getChildren().add(newSeparator);//These actually add the formatted label and separator
+////                    LocationBox.getChildren().add(newArea);
+//                }
+//
+//
+//
+//                HBox siteReservations = new HBox();
+//                double totalReservationsLength = 0;
+//                LocalDate lastDate = LocalDate.now();
+//                double buttonHeight = 37;
+//                for(int i = 3; i<=site.length; i++) {
+//                    if(i != site.length){
+//                        String split = "#";
+//                        String[] reservation = site[i].split(split);
+//
+//
+//                        //Date shit
+//                        String[] startDate = reservation[1].split("-");
+//                        String[] endDate = reservation[2].split("-");
+//                        LocalDate reservationStart;
+//                        LocalDate reservationEnd;
+//                        System.out.println(site[i]);
+//                        System.out.println(Arrays.toString(reservation));
+//                        reservationStart = LocalDate.of(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]));
+//                        reservationEnd = LocalDate.of(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]));
+//
+//                        LocalDate today = LocalDate.now();
+//
+//                        int reservationLength;
+//                        if (reservationStart.isBefore(today)) {
+//                            reservationLength = dateDifference(today, reservationEnd) + 1;
+//                        } else {
+//                            reservationLength = dateDifference(reservationStart, reservationEnd) + 1;
+//                        }
+//                        System.out.println("THE LENGTH OF THE RESERVATION IS " + reservationLength);
+//
+//
+//                        //If there is a gap in between reservations--
+//                        if (lastDate.isBefore(reservationStart) && dateDifference(lastDate, reservationStart) > 1) {
+//                            HBox emptyReservationBox = new HBox();
+//                            Button emptyReservationButton = new Button();
+//                            int emptyReservationLength = dateDifference(lastDate, reservationStart) - 1;
+//                            if (emptyReservationLength <= 1) {
+//                                emptyReservationButton.setText("");
+//                            } else {
+//                                emptyReservationButton.setText("Open");
+//                            }
+//                            emptyReservationButton.setBackground(new Background(new BackgroundFill(new Color(0.314, 0.72, 0.325, 1), new CornerRadii(3), new Insets(0, 0, 0, 0))));
+//                            double emptyReservationTotalLength = (emptyReservationLength * 37.35) - 10.0;
+//                            emptyReservationButton.setPrefSize((emptyReservationTotalLength), buttonHeight);
+//                            emptyReservationBox.setPadding(new Insets(3, 3, 3, 3));
+//                            emptyReservationBox.getChildren().add(emptyReservationButton);
+//                            siteReservations.getChildren().add(emptyReservationBox);
+//                            System.out.println("THE LENGTH OF THE EMPTY **** RESERVATION IS " + emptyReservationLength);
+//                            totalReservationsLength += emptyReservationTotalLength + 6;
+//
+//                        }
+//
+//                        //more reservation formatting---
+//                        HBox reservationBox = new HBox();
+//                        Button reservationButton = new Button();
+//                        if (reservationLength == 1) {
+//                            reservationButton.setText("");
+//                        } else if (reservationLength <= 2) {
+//                            reservationButton.setText(reservation[0]);
+//                        } else if (reservationLength <= 3) {
+//                            reservationButton.setText("Res #" + reservation[0]);
+//                        }else {
+//                            reservationButton.setText("Reservation #" + reservation[0]);
+//                        }
+//                        reservationButton.setBackground(new Background(new BackgroundFill(new Color(0.878, 0.243, 0.243, 1), new CornerRadii(3), new Insets(0, 0, 0, 0))));
+//                        double totalLength = (reservationLength * 36.04)-7.2;
+//                        reservationButton.setPrefSize(totalLength, buttonHeight);
+//                        reservationBox.setPadding(new Insets(3, 3, 3, 3));
+//                        reservationBox.getChildren().add(reservationButton);
+//
+//                        siteReservations.getChildren().add(reservationBox);
+//                        lastDate = reservationEnd;
+//                        totalReservationsLength += totalLength + 6;
+//
+//                    } else {//If we have reached the end of the reservations
+//                        String split = "#";
+//                        String[] reservation = site[i-1].split(split);
+//
+//
+//                        //Date shit
+//                        String[] startDate1 = reservation[1].split("-");
+//                        String[] endDate1 = reservation[2].split("-");
+//                        LocalDate lastReservationStart;
+//                        LocalDate lastReservationEnd;
+//                        System.out.println(site[i-1]);
+//                        System.out.println(Arrays.toString(reservation));
+//                        lastReservationStart = LocalDate.of(Integer.parseInt(startDate1[2]), Integer.parseInt(startDate1[0]), Integer.parseInt(startDate1[1]));
+//                        lastReservationEnd = LocalDate.of(Integer.parseInt(endDate1[2]), Integer.parseInt(endDate1[0]), Integer.parseInt(endDate1[1]));
+//                        if(lastReservationEnd.isBefore(endingDate)){
+//                            HBox emptyReservationBox = new HBox();
+//                            Button emptyReservationButton = new Button();
+//                            int emptyReservationLength = dateDifference(lastReservationEnd, endingDate);
+//                            if (emptyReservationLength <= 1) {
+//                                emptyReservationButton.setText("");
+//                            } else {
+//                                emptyReservationButton.setText("Open");
+//                            }
+//                            emptyReservationButton.setBackground(new Background(new BackgroundFill(new Color(0.314, 0.72, 0.325, 1), new CornerRadii(3), new Insets(0, 0, 0, 0))));
+//                            emptyReservationButton.setPrefSize(((daysToDisplay*36)-totalReservationsLength)-22, buttonHeight);
+//                            emptyReservationBox.setPadding(new Insets(3, 3, 3, 3));
+//                            emptyReservationBox.getChildren().add(emptyReservationButton);
+//                            siteReservations.getChildren().add(emptyReservationBox);
+//                            System.out.println("THE LENGTH OF THE EMPTY **** RESERVATION IS " + emptyReservationLength + " AND THE WIDTH IS supposed to be " + emptyReservationButton.getPrefWidth() + " But the actual width is " + emptyReservationButton.getWidth());
+//                            reservationAnchorPane.setPrefWidth(daysToDisplay*36);
+//                        }
+//
+//
+//
+//                    }
+//                }
+//                prevArea1 = site[0];//This is for the location titles above the specific types of sites
+//                mainReservationVBox.getChildren().add(siteReservations);
+//            }
+//
+//        }
 
 
         //A BUNCH OF LISTENERS____________________________
