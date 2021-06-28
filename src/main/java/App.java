@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import main.java.Camping.GroupManager;
+import main.java.Database.Database;
+import main.java.Database.SiteData;
 
 
 public class App extends Application {
@@ -22,14 +24,9 @@ public class App extends Application {
 
     //Public things:
     public static GroupManager groupManager;
+    public static Database database = new Database();
+    public static SiteData siteData = new SiteData();
 
-    static {
-        try {
-            groupManager = new GroupManager();//The GroupManager needs to be made first so the siteManager can check against that.
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
     public static App getInstance(){
@@ -41,6 +38,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        siteData.loadSitesFromCSV();
 
 
         System.out.println("App start");
