@@ -6,10 +6,16 @@ import main.java.Exceptions.InvalidSiteException;
 import java.util.ArrayList;
 
 public class Site {
-    private static ArrayList<String> availableSiteTypes;
     private String siteName;
     private String siteType;
+    private String groupName;
     private ArrayList<Reservation> listOfReservations;
+
+    public Site( String groupName, String siteName, String siteType) {
+        this.siteName = siteName;
+        this.siteType = siteType;
+        this.groupName = groupName;
+    }
 
     public Site(String siteName, String siteType, ArrayList<Reservation> listOfReservations) {
         this.siteName = siteName;
@@ -39,12 +45,13 @@ public class Site {
         return listOfReservations;
     }
 
-    public static ArrayList<String> getAvailableSiteTypes() {
-        return availableSiteTypes;
-    }
 
     public String getSiteType() {
         return siteType;
+    }
+
+    public String getGroupName() {
+        return groupName;
     }
 
     //Setters below here:--------------

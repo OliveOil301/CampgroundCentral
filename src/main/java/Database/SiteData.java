@@ -1,6 +1,7 @@
 package main.java.Database;
 
 import main.java.Camping.Group;
+import main.java.Camping.GroupManager;
 import main.java.Camping.Site;
 import main.java.Utilities.CSVManager;
 
@@ -70,7 +71,6 @@ public class SiteData {
             ps.setString(3, siteType);
             ps.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("Failed to add site to database with " + siteName + " as name and " + siteType + " as type.");
             return;
         }
@@ -95,14 +95,22 @@ public class SiteData {
         System.out.println("WE LOADED EVERYTHING!!");
     }
 
-    public ArrayList<Group> getSitesByGroup(){
-        ArrayList<Group> allSites = new ArrayList<Group>();
+    public GroupManager getSitesByGroup() throws IOException {
+        GroupManager allSites = new GroupManager();
         String str = "select * from Sites order by siteGroup ASC";
         try{
             PreparedStatement ps = conn.prepareStatement(str);
             ResultSet rs = ps.executeQuery();
+            String group = null;
             while (rs.next()){
-                //allSites.add(rs.getString("longName"), rs.getString("nodeID"));
+                String[] siteData = new String[3];
+                siteData[0] = rs.getString("siteGroup");
+                siteData[1] = rs.getString("siteName");
+                siteData[2] = rs.getString("siteType");
+
+                Site s = new Site(siteData[0], siteData[1], siteData[2]);
+                allSites.addSite(s);
+
             }
             rs.close();
             ps.close();
