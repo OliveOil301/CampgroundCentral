@@ -3,10 +3,8 @@ package main.java.Utilities;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CSVManager {
@@ -52,5 +50,21 @@ public class CSVManager {
         writer.writeNext(itemToAdd);
         writer.flush();
         writer.close();
+    }
+
+
+    public ArrayList<String[]> readWholeCSV() throws IOException {
+        ArrayList<String[]> csv = new ArrayList<>();
+
+        BufferedReader br = new BufferedReader(new FileReader("src/main/resources/storage/Sites.csv"));
+        String line;
+
+        //This while loop iterates through the whole csv
+        while ((line = br.readLine()) != null) {
+            String[] site = line.split(",");
+            csv.add(site);
+        }
+
+        return csv;
     }
 }

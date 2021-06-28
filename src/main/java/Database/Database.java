@@ -6,9 +6,9 @@ public class Database {
 
 
 
-    private static Connection conn = null;
+    static Connection conn = null;
     // Url for live code
-    private final static String url = "jdbc:derby:CCDB;create=true";
+    protected final static String url = "jdbc:derby:CCDB;create=true";
     // Url for testing
     private final static String testURL = "jdbc:derby://localhost:1527/CCDB;create=true";
 
@@ -81,7 +81,7 @@ public class Database {
                 PreparedStatement ps4 = conn.prepareStatement(tbl4);
                 ps4.execute();
                 //---------------------------------------------------
-                //This is a table where information needed on startup is stored.
+                //This is a table where information needed on startup is stored. Maybe....
                 String tbl7 =
                         "create table Information (currentReservationNumber varchar(50) not null, name varchar(50), visitDate timestamp, visitReason varchar(250), deleted boolean, primary key(guestID))";
                 PreparedStatement ps7 = conn.prepareStatement(tbl7);
