@@ -1,13 +1,11 @@
 package main.java.Database;
 
+import main.java.Camping.Group;
 import main.java.Camping.Site;
 import main.java.Utilities.CSVManager;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class SiteData {
@@ -38,7 +36,7 @@ public class SiteData {
 
     public static void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:derby:CCDB;create=true");
+            conn = DriverManager.getConnection("jdbc:derby:CCDB;");
             conn.setAutoCommit(true);
         } catch (Exception e) {
 //            try {
@@ -62,13 +60,14 @@ public class SiteData {
     }
 
 
-    public void addSite(String siteName, String siteType) {
+    public void addSite(String siteGroup, String siteName, String siteType) {
         try {
             String str =
-                    "insert into Sites (siteName, siteType) values (?,?)";
+                    "insert into Sites (siteGroup, siteName, siteType) values (?,?,?)";
             PreparedStatement ps = conn.prepareStatement(str);
-            ps.setString(1, siteName);
-            ps.setString(2, siteType);
+            ps.setString(1, siteGroup);
+            ps.setString(2, siteName);
+            ps.setString(3, siteType);
             ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,13 +77,39 @@ public class SiteData {
         return;
     }
 
-    public void loadSitesFromCSV() throws IOException {
+    public void clearSites() throws SQLException {
+        String str;
+        Statement s = conn.createStatement();
+        str = "delete from Sites";
+        s.execute(str);
+    }
+
+    public void loadSitesFromCSV() throws IOException, SQLException {
+        clearSites();
+
         CSVManager CSVM = new CSVManager("src/main/resources/storage/Sites.csv");
         ArrayList<String[]> siteCSV = CSVM.readWholeCSV();
         for (String[] s:siteCSV) {
-            addSite(s[0] + s[1], s[2]);
+            addSite(s[0], s[0] + " " + s[1], s[2]);
         }
         System.out.println("WE LOADED EVERYTHING!!");
+    }
+
+    public ArrayList<Group> getSitesByGroup(){
+        ArrayList<Group> allSites = new ArrayList<Group>();
+        String str = "select * from Sites order by siteGroup ASC";
+        try{
+            PreparedStatement ps = conn.prepareStatement(str);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                //allSites.add(rs.getString("longName"), rs.getString("nodeID"));
+            }
+            rs.close();
+            ps.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return allSites;
     }
 
 

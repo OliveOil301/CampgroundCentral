@@ -13,7 +13,7 @@ public class Database {
 
     static Connection conn = null;
     // Url for live code
-    protected final static String url = "jdbc:derby:CCDB;create=true";
+    protected final static String url = "jdbc:derby:CCDB;";
     // Url for testing
     private final static String testURL = "jdbc:derby://localhost:1527/CCDB;create=true";
 
@@ -76,7 +76,7 @@ public class Database {
         try {
             if (isTableEmpty()) {
                 String tbl1 =
-                        "create table Sites (siteName varchar(50) not null, siteType varchar(50) not null, primary key (siteName))";
+                        "create table Sites (siteGroup varchar(50) not null, siteName varchar(50) not null, siteType varchar(50) not null, primary key (siteName))";
 
                 PreparedStatement ps1 = conn.prepareStatement(tbl1);
                 ps1.execute();
