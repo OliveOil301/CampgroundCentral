@@ -56,11 +56,11 @@ public class GroupManager {
                 siteAdded = true;
             }
         }
-        if(siteAdded = false){
+        if(!siteAdded){
             ArrayList<Site> sites = new ArrayList<>();
             sites.add(s);
             Group g = new Group(s.getGroupName(), sites);
-            newGroup(g);
+            this.newGroup(g);
         }
 
     }

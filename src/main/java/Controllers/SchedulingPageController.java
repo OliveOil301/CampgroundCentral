@@ -75,7 +75,7 @@ public class SchedulingPageController {
 
             //This creates the title section for the new group
             Site site1 = g.getSitesInGroup().get(0);
-            System.out.println();
+            System.out.println(g.getGroupName() + " IS THE GROUP NAME");
             System.out.println(prevArea + "| - - |" + site1.getGroupName() + "|");
             Separator newSeparator = new Separator();//This is the separator for the label
             newSeparator.setId("New Separator " + site1.getGroupName());
