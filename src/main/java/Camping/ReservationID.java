@@ -65,6 +65,15 @@ public class ReservationID {
         this.alphanumericCode = alphanumericCode;
     }
 
+    /** plusOne(ReservationID r) adds one to a reservationID and returns the new reservationID
+     *
+     * This still needs to handle the digit rollover like from 35 to 36. It will set the next digit up but it needs to roll back the last digit
+     * Also needs to do this for the next digits
+     *
+     * @param r is the ReservationID we wish to start with and add one to
+     * @return the new reservationID with one added to it
+     * @throws InvalidReservationIDException if we hit the max value of something around 2 billion (36^6)
+     */
     public ReservationID plusOne(ReservationID r) throws InvalidReservationIDException {
         String code = r.getAlphanumericCode();
         String newCode = "";
