@@ -3,12 +3,13 @@ package main.java.Camping;
 import main.java.Exceptions.InvalidReservationIDException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class ReservationID {
     private String alphanumericCode;//MUST BE 6 DIGITS!!!
-    private static HashMap<Character,Integer> alphabetMap;
-    private static ArrayList<Character> alphabetList;
+    private static HashMap<Character,Integer> alphabetMap = new HashMap<>();
+    private static ArrayList<Character> alphabetList = new ArrayList<>();
 
 
     public ReservationID(String alphanumericCode) {
@@ -54,7 +55,12 @@ public class ReservationID {
         alphabetMap.put('X',33);
         alphabetMap.put('Y',34);
         alphabetMap.put('Z',35);
-        alphabetList = (ArrayList<Character>) alphabetMap.keySet();
+        alphabetList.clear();
+        alphabetList.addAll(alphabetMap.keySet());
+        ArrayList<Character> tempList = new ArrayList<>(alphabetList.subList(26, 35));
+        tempList.addAll(alphabetList.subList(0, 25));
+        alphabetList.clear();
+        alphabetList.addAll(tempList);
     }
 
     public String getAlphanumericCode() {
@@ -70,18 +76,21 @@ public class ReservationID {
      * This still needs to handle the digit rollover like from 35 to 36. It will set the next digit up but it needs to roll back the last digit
      * Also needs to do this for the next digits
      *
-     * @param r is the ReservationID we wish to start with and add one to
      * @return the new reservationID with one added to it
      * @throws InvalidReservationIDException if we hit the max value of something around 2 billion (36^6)
      */
-    public ReservationID plusOne(ReservationID r) throws InvalidReservationIDException {
+    public ReservationID plusOne() throws InvalidReservationIDException {
+        ReservationID r = this;
         String code = r.getAlphanumericCode();
         String newCode = "";
         char[] characterlist = r.getAlphanumericCode().toCharArray();
         for (int i = 5; i>=0; i--) {
             if(characterlist[i]!='Z'){
                 characterlist[i] = alphabetList.get(alphabetMap.get(characterlist[i])+1);
-                newCode = characterlist.toString();
+                for (int j = i+1; j<=5; j++){
+                    characterlist[j] = alphabetList.get(0);
+                }
+                newCode = String.copyValueOf(characterlist);
                 r.setAlphanumericCode(newCode);
                 return r;
             }
