@@ -132,7 +132,8 @@ public class Reservation {
 
     }
 
-    public Reservation(LocalDate startDate, LocalDate endDate, String siteName, String[] customerName, String phoneNumber, String vehicleMake, String vehicleModel, String vehicleLicense, String camperMake, String camperModel, String camperLicense) {
+    public Reservation(ReservationID reservationID, LocalDate startDate, LocalDate endDate, String siteName, String[] customerName, String phoneNumber, String vehicleMake, String vehicleModel, String vehicleLicense, String camperMake, String camperModel, String camperLicense) {
+        this.reservationID = reservationID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.siteName = siteName;
@@ -169,11 +170,13 @@ public class Reservation {
 
     public void addGuest(String[] newGuest){
         this.guests.add(newGuest);
+        //also need to add to database
     }
 
 
     public void addGuests(ArrayList<String[]> newGuests){
         this.guests.addAll(newGuests);
+        //also need to add to database
     }
 
 
