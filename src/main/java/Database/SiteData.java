@@ -9,12 +9,9 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class SiteData {
+public class SiteData extends Data {
 
 
-
-    private static Database db;
-    static Connection conn = null;
 
     public SiteData() {
         connect();

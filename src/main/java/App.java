@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import main.java.Camping.GroupManager;
+import main.java.Camping.ReservationID;
 import main.java.Database.Database;
 import main.java.Database.SiteData;
 
@@ -29,10 +30,14 @@ public class App extends Application {
     public static SiteData siteData = new SiteData();
     public static GroupManager groupManager;
 
+    public static ReservationID reservationID = new ReservationID("000000");
+
+
     static {
         try {
             groupManager = siteData.getAllSites();
-        } catch (IOException e) {
+            //Make a function in GroupManager that loads the next ReservationID and assigns it to the ID above
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
