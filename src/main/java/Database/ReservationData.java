@@ -61,6 +61,23 @@ public class ReservationData extends Data{
     }
 
     private String getStringFromLocalDate(LocalDate date){
+        String day = Integer.toString(date.getDayOfMonth());
+        String month = Integer.toString(date.getMonthValue());
+        String year = Integer.toString(date.getYear());
+
+        if(day.length()==1){
+            day = "0" + day + "/";
+        } else {
+            day = day + "/";
+        }
+
+        if(month.length()==1){
+            month = "0" + month + "/";
+        } else {
+            month = month + "/";
+        }
+
+        return day + month + year;
 
     }
 }
