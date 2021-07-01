@@ -97,4 +97,25 @@ public class ReservationID {
         }
         throw new InvalidReservationIDException("You ran out of ReservationID's! Please reset the ID's before continuing");
     }
+
+
+    public boolean isMoreThan(ReservationID r){
+        if(this.getValue()>r.getValue()){
+            return true;
+        }
+        return false;
+    }
+
+    /** getValue (ReservationID r) gets the base-10 value of the ReservationID for comparing purposes
+     * @return the base-10 equivalent of the alphanumeric code
+     */
+    private int getValue(){
+        int runningTotal = 0;
+        char[] characterlist = this.getAlphanumericCode().toCharArray();
+        for(int i = 5; i>=0; i--){
+            int j = 5-i;
+            runningTotal += (alphabetMap.get(characterlist[i])+1) * Math.pow(36,j);
+        }
+        return runningTotal;
+    }
 }

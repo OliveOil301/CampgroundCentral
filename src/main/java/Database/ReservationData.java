@@ -1,5 +1,6 @@
 package main.java.Database;
 
+import main.java.App;
 import main.java.Camping.GroupManager;
 import main.java.Camping.Reservation;
 import main.java.Camping.ReservationID;
@@ -21,6 +22,7 @@ public class ReservationData extends Data{
     public GroupManager loadAllReservations(GroupManager g) throws IOException {
         //order by siteGroup ASC
         String str = "select * from Reservations";
+        ReservationID rID = null;
         try{
             PreparedStatement ps = conn.prepareStatement(str);
             ResultSet rs = ps.executeQuery();
@@ -39,12 +41,25 @@ public class ReservationData extends Data{
                 reservationData[10] = rs.getString("camperModel");
                 reservationData[11] = rs.getString("camperLicense");
 
+                if(rID == null){
+                    rID = new ReservationID(reservationData[0]);
+                } else {
+                    ReservationID rIDNew = new ReservationID(reservationData[0]);
+                    if(rIDNew.isMoreThan(rID)){
+                        rID = rIDNew;
+                    }
+                }
 
                 Reservation r = new Reservation(new ReservationID(reservationData[0]), getDateFromString(reservationData[1]), getDateFromString(reservationData[2]), reservationData[3], getSplitName(reservationData[4]), reservationData[5], reservationData[6], reservationData[7], reservationData[8], reservationData[9], reservationData[10], reservationData[11]);
                 //Need to make the GroupManager function that adds a reservation to their own site.
             }
             rs.close();
             ps.close();
+            if(rID != null){
+                App.reservationID = rID.plusOne();
+            } else {
+                App.reservationID = new ReservationID("000000");
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
