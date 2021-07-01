@@ -51,7 +51,7 @@ public class ReservationData extends Data{
                 }
 
                 Reservation r = new Reservation(new ReservationID(reservationData[0]), getDateFromString(reservationData[1]), getDateFromString(reservationData[2]), reservationData[3], getSplitName(reservationData[4]), reservationData[5], reservationData[6], reservationData[7], reservationData[8], reservationData[9], reservationData[10], reservationData[11]);
-                //Need to make the GroupManager function that adds a reservation to their own site.
+                App.groupManager.addReservation(r);
             }
             rs.close();
             ps.close();
@@ -101,7 +101,7 @@ public class ReservationData extends Data{
         int lastCut = -1;
         int totalPieces = 0;
         String[] cutName = new String[10];
-        for (int i = 0; i< name.length()-1; i++) {
+        for (int i = 0; i <= name.length()-1; i++) {
             if(name.charAt(i) == ' '){
                 cutName[cutName.length-1] = name.substring(lastCut+1, i);
                 lastCut = i;

@@ -59,8 +59,8 @@ public class Site {
         this.siteName = siteName;
     }
 
-    public void setListOfReservations(ArrayList<Reservation> listOfReservations) {
-        this.listOfReservations = listOfReservations;
+    public void addReservation(Reservation r){
+        this.listOfReservations.add(r);
     }
 
     public void setSiteType(String siteType) {

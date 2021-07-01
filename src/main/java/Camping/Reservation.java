@@ -179,6 +179,15 @@ public class Reservation {
         //also need to add to database
     }
 
+    public String getSiteGroupName(){
+        for (int i = 0; i <= this.siteName.length()-1; i++) {
+            if(siteName.charAt(i) == ' '){
+                return siteName.substring(0, i);
+            }
+        }
+        return null;
+    }
+
 
 
 
