@@ -10,6 +10,7 @@ import main.java.Camping.GroupManager;
 import main.java.Camping.ReservationID;
 import main.java.Database.Database;
 import main.java.Database.SiteData;
+import main.java.Shopping.ShoppingItemManager;
 
 import java.io.IOException;
 
@@ -29,6 +30,7 @@ public class App extends Application {
     public static Database database = new Database();
     public static SiteData siteData = new SiteData();
     public static GroupManager groupManager;
+    public static ShoppingItemManager shoppingItemManager = new ShoppingItemManager();
 
     public static ReservationID reservationID = new ReservationID("000000");
 
