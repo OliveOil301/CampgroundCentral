@@ -1,7 +1,6 @@
 package main.java.Shopping;
 
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
 import main.java.App;
 
 import java.util.ArrayList;

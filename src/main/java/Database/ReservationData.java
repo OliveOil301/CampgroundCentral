@@ -16,7 +16,6 @@ public class ReservationData extends Data{
     public ReservationData() {
         connect();
         driver();
-
     }
 
     public GroupManager loadAllReservations(GroupManager g) throws IOException {

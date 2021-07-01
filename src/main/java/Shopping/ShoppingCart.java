@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ShoppingCart {
     private ArrayList<ShoppingItem> items;
     private ObservableList<ShoppingItem> itemsObservable;
-    private Float totalPrice;
+    private Double totalPrice;
     private String listName;
 
 
@@ -20,18 +20,18 @@ public class ShoppingCart {
      */
     public ShoppingCart(ArrayList<ShoppingItem> items) {
         this.items = items;
+        this.totalPrice = this.generateTotalPrice();
         this.itemsObservable = FXCollections.observableList(items);
-        this.totalPrice = generateTotalPrice(items);
     }
 
     public ShoppingCart() {
     }
 
 
-    private float generateTotalPrice(ArrayList<ShoppingItem> items){
-        float total = 0;
+    private Double generateTotalPrice(){
+        Double total = 0.0;
         if(!items.isEmpty()){
-            for (ShoppingItem item:items) {
+            for (ShoppingItem item:this.items) {
                 total += item.getPrice() * item.getQuantity();
             }
         }
@@ -40,11 +40,20 @@ public class ShoppingCart {
 
     public void addList(ArrayList<ShoppingItem> items) {
         this.items.addAll(items);
+        this.totalPrice = this.generateTotalPrice();
         this.itemsObservable.addAll(items);
-        this.totalPrice = generateTotalPrice(this.items);
     }
 
     public void addItem(ShoppingItem item){
+        this.items.add(item);
+        this.totalPrice = this.generateTotalPrice();
+        this.itemsObservable.add(item);
+
+    }
+    public void clearItems(){
+        this.items.clear();
+        this.totalPrice = 0.0;
+        this.itemsObservable.clear();
 
     }
 

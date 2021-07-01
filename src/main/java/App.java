@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import main.java.Camping.GroupManager;
 import main.java.Camping.ReservationID;
 import main.java.Database.Database;
+import main.java.Database.ReservationData;
 import main.java.Database.SiteData;
 import main.java.Shopping.ShoppingItemManager;
 
@@ -26,19 +27,27 @@ public class App extends Application {
     public static App app_instance = null;
 
 
-    //Public things:
+    //Public things:-------------------------------------
+
+    //Database stuff
     public static Database database = new Database();
     public static SiteData siteData = new SiteData();
+    public static ReservationData reservationData;
+
+    //Manager classes
     public static GroupManager groupManager;
     public static ShoppingItemManager shoppingItemManager = new ShoppingItemManager();
 
+    //These are id's that we need to keep track of for database stuff and otherwise.
     public static ReservationID reservationID = new ReservationID("000000");
 
 
+    //These constructors can throw errors theoretically so they are called and caught here.
     static {
         try {
             groupManager = siteData.getAllSites();
-            //Make a function in GroupManager that loads the next ReservationID and assigns it to the ID above
+            reservationData = new ReservationData();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,8 +70,6 @@ public class App extends Application {
         App.primaryStage = stage; // stage is the window given to us
         Parent root = FXMLLoader.load(getClass().getResource("/main/resources/views/LoginScreen.fxml"));
 
-        //mapService.loadCSVFile("src/main/resources/edu/wpi/u/MapUAllNodes.csv", "Nodes");
-        //mapService.loadCSVFile("src/main/resources/edu/wpi/u/MapUAllEdges.csv", "Edges");
 
         Scene scene = new Scene(root);
         App.primaryStage.setScene(scene);

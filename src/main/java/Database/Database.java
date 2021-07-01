@@ -90,6 +90,11 @@ public class Database {
                         "create table Reservations (reservationID varchar(50) not null, startDate varchar(50) not null, endDate varchar(50) not null, siteName varchar(50) not null, customerName varchar(250) not null, phoneNumber varchar(100) not null, vehicleMake varchar(20) not null, vehicleModel varchar(20) not null, vehicleLicense varchar(20) not null, camperMake varchar(20), camperModel varchar(20), camperLicense varchar(20), primary key(reservationID))";
                 PreparedStatement ps3 = conn.prepareStatement(tbl3);
                 ps3.execute();
+
+                String tbl4 =
+                        "create table ShoppingItems (itemNumber integer not null, name varchar(100) not null, Description varchar(500) not null, price float not null, pricePerWhat varchar(50) not null, primary key(itemNumber))";
+                PreparedStatement ps4 = conn.prepareStatement(tbl4);
+                ps4.execute();
                 //---------------------------------------------------
                 //This is a table where information needed on startup is stored. Maybe....
 //                String tbl7 =
