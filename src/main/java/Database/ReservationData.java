@@ -2,6 +2,7 @@ package main.java.Database;
 
 import main.java.Camping.GroupManager;
 import main.java.Camping.Reservation;
+import main.java.Camping.ReservationID;
 import main.java.Camping.Site;
 
 import java.io.IOException;
@@ -23,7 +24,6 @@ public class ReservationData extends Data{
         try{
             PreparedStatement ps = conn.prepareStatement(str);
             ResultSet rs = ps.executeQuery();
-            Reservation r = new Reservation();
             while (rs.next()){
                 String[] reservationData = new String[12];
                 reservationData[0] = rs.getString("reservationID");
@@ -40,8 +40,8 @@ public class ReservationData extends Data{
                 reservationData[11] = rs.getString("camperLicense");
 
 
-                Site s = new Site(reservationData[0], reservationData[1], reservationData[2]);
-                g.addSite(s);
+                Reservation r = new Reservation(new ReservationID(reservationData[0]), getDateFromString(reservationData[1]), getDateFromString(reservationData[2]), reservationData[3], getSplitName(reservationData[4]), reservationData[5], reservationData[6], reservationData[7], reservationData[8], reservationData[9], reservationData[10], reservationData[11]);
+                //Need to make the GroupManager function that adds a reservation to their own site.
             }
             rs.close();
             ps.close();
@@ -79,5 +79,21 @@ public class ReservationData extends Data{
 
         return day + month + year;
 
+    }
+
+
+    private String[] getSplitName(String name){
+        int lastCut = -1;
+        int totalPieces = 0;
+        String[] cutName = new String[10];
+        for (int i = 0; i< name.length()-1; i++) {
+            if(name.charAt(i) == ' '){
+                cutName[cutName.length-1] = name.substring(lastCut+1, i);
+                lastCut = i;
+                totalPieces ++;
+            }
+        }
+
+        return cutName;
     }
 }
