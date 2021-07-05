@@ -77,7 +77,6 @@ public class Database {
             if (isTableEmpty()) {
                 String tbl1 =
                         "create table Sites (siteGroup varchar(50) not null, siteName varchar(50) not null, siteType varchar(50) not null, primary key (siteName))";
-
                 PreparedStatement ps1 = conn.prepareStatement(tbl1);
                 ps1.execute();
 
@@ -92,9 +91,14 @@ public class Database {
                 ps3.execute();
 
                 String tbl4 =
-                        "create table ShoppingItems (itemNumber integer not null, name varchar(100) not null, Description varchar(500) not null, price float not null, pricePerWhat varchar(50) not null, primary key(itemNumber))";
+                        "create table ShoppingItems (itemNumber integer not null, name varchar(100) not null, Description varchar(500) not null, price double not null, pricePerWhat varchar(50) not null, primary key(itemNumber))";
                 PreparedStatement ps4 = conn.prepareStatement(tbl4);
                 ps4.execute();
+
+                String tbl5 =
+                        "create table Guests (guestNumber integer not null, reservationID varchar(50) not null, name varchar(100) not null, phoneNumber varchar(500), primary key(guestNumber))";
+                PreparedStatement ps5 = conn.prepareStatement(tbl5);
+                ps5.execute();
                 //---------------------------------------------------
                 //This is a table where information needed on startup is stored. Maybe....
 //                String tbl7 =

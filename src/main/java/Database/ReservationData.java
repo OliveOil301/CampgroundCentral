@@ -1,17 +1,16 @@
 package main.java.Database;
 
 import main.java.App;
-import main.java.Camping.GroupManager;
-import main.java.Camping.Reservation;
-import main.java.Camping.ReservationID;
-import main.java.Camping.Site;
+import main.java.Camping.*;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class ReservationData extends Data{
+public class ReservationData extends Data {
 
     public ReservationData() {
         connect();
@@ -22,10 +21,10 @@ public class ReservationData extends Data{
         //order by siteGroup ASC
         String str = "select * from Reservations";
         ReservationID rID = null;
-        try{
+        try {
             PreparedStatement ps = conn.prepareStatement(str);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 String[] reservationData = new String[12];
                 reservationData[0] = rs.getString("reservationID");
                 reservationData[1] = rs.getString("startDate");
@@ -40,26 +39,28 @@ public class ReservationData extends Data{
                 reservationData[10] = rs.getString("camperModel");
                 reservationData[11] = rs.getString("camperLicense");
 
-                if(rID == null){
+                if (rID == null) {
                     rID = new ReservationID(reservationData[0]);
                 } else {
                     ReservationID rIDNew = new ReservationID(reservationData[0]);
-                    if(rIDNew.isMoreThan(rID)){
+                    if (rIDNew.isMoreThan(rID)) {
                         rID = rIDNew;
                     }
                 }
+                ReservationID ID = new ReservationID(reservationData[0]);
+                ArrayList<Guest> guestList = getGuestsFromID(ID);
 
-                Reservation r = new Reservation(new ReservationID(reservationData[0]), getDateFromString(reservationData[1]), getDateFromString(reservationData[2]), reservationData[3], getSplitName(reservationData[4]), reservationData[5], reservationData[6], reservationData[7], reservationData[8], reservationData[9], reservationData[10], reservationData[11]);
+                Reservation r = new Reservation(ID, getDateFromString(reservationData[1]), getDateFromString(reservationData[2]), reservationData[3], getSplitName(reservationData[4]), reservationData[5], guestList, reservationData[6], reservationData[7], reservationData[8], reservationData[9], reservationData[10], reservationData[11]);
                 App.groupManager.addReservation(r);
             }
             rs.close();
             ps.close();
-            if(rID != null){
+            if (rID != null) {
                 App.reservationID = rID.plusOne();
             } else {
                 App.reservationID = new ReservationID("000000");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return g;
@@ -68,24 +69,23 @@ public class ReservationData extends Data{
     }
 
 
-
-    private LocalDate getDateFromString(String date){
+    private LocalDate getDateFromString(String date) {
         // Date is in format dd/mm/yyyy with slashes
-        return LocalDate.of(Integer.parseInt(date.substring(6,9)), Integer.parseInt(date.substring(3,4)), Integer.parseInt(date.substring(0,1)));
+        return LocalDate.of(Integer.parseInt(date.substring(6, 9)), Integer.parseInt(date.substring(3, 4)), Integer.parseInt(date.substring(0, 1)));
     }
 
-    private String getStringFromLocalDate(LocalDate date){
+    private String getStringFromLocalDate(LocalDate date) {
         String day = Integer.toString(date.getDayOfMonth());
         String month = Integer.toString(date.getMonthValue());
         String year = Integer.toString(date.getYear());
 
-        if(day.length()==1){
+        if (day.length() == 1) {
             day = "0" + day + "/";
         } else {
             day = day + "/";
         }
 
-        if(month.length()==1){
+        if (month.length() == 1) {
             month = "0" + month + "/";
         } else {
             month = month + "/";
@@ -96,18 +96,47 @@ public class ReservationData extends Data{
     }
 
 
-    private String[] getSplitName(String name){
+    private String[] getSplitName(String name) {
         int lastCut = -1;
         int totalPieces = 0;
         String[] cutName = new String[10];
-        for (int i = 0; i <= name.length()-1; i++) {
-            if(name.charAt(i) == ' '){
-                cutName[cutName.length-1] = name.substring(lastCut+1, i);
+        for (int i = 0; i <= name.length() - 1; i++) {
+            if (name.charAt(i) == ' ') {
+                cutName[cutName.length - 1] = name.substring(lastCut + 1, i);
                 lastCut = i;
-                totalPieces ++;
+                totalPieces++;
             }
         }
 
         return cutName;
     }
+
+
+    private ArrayList<Guest> getGuestsFromID(ReservationID ID) {
+        ArrayList<Guest> guestList = new ArrayList<>();
+
+        String str = "select * from Reservations where reservationID = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(str);
+            ps.setString(1, ID.getAlphanumericCode());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String[] Guest = new String[4];
+                Guest[0] = rs.getString("name");
+                Guest[1] = rs.getString("guestNumber");
+                Guest[2] = rs.getString("reservationID");
+                Guest[3] = rs.getString("phoneNumber");
+
+                Guest g = new Guest(Guest[0], Guest[1], new ReservationID(Guest[2]), Guest[3]);
+                guestList.add(g);
+            }
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return guestList;
+    }
+
+
 }

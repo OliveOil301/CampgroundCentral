@@ -13,6 +13,7 @@ public class Reservation {
     private String siteName;
     private String[] customerName;
     private String phoneNumber;
+    private ArrayList<Guest> guestList;
     private String vehicleMake;
     private String vehicleModel;
     private String vehicleLicense;
@@ -132,13 +133,14 @@ public class Reservation {
 
     }
 
-    public Reservation(ReservationID reservationID, LocalDate startDate, LocalDate endDate, String siteName, String[] customerName, String phoneNumber, String vehicleMake, String vehicleModel, String vehicleLicense, String camperMake, String camperModel, String camperLicense) {
+    public Reservation(ReservationID reservationID, LocalDate startDate, LocalDate endDate, String siteName, String[] customerName, String phoneNumber, ArrayList<Guest> guestList, String vehicleMake, String vehicleModel, String vehicleLicense, String camperMake, String camperModel, String camperLicense) {
         this.reservationID = reservationID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.siteName = siteName;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
+        this.guestList = guestList;
         this.vehicleMake = vehicleMake;
         this.vehicleModel = vehicleModel;
         this.vehicleLicense = vehicleLicense;

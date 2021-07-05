@@ -11,6 +11,15 @@ import java.io.IOException;
 
 public class ShoppingPageController {
 
+
+
+
+
+
+    public void initialize(){
+        //Will need to load all items from App.shoppingItemManager
+    }
+
     @FXML
     private void handleNewReservationButton() throws IOException {
         if(App.newReservationWindows == 0) {
