@@ -2,6 +2,7 @@ package main.java.Camping;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Site {
     private String siteName;
@@ -58,8 +59,11 @@ public class Site {
     public void addReservation(Reservation r){
         this.listOfReservations.add(r);
 
-        //This stuff below makes sure the reservedDates list gets updated when a reservation is added.
-        //TODO: remake this part
+        if(this.availableDates == null){
+            loadAvailableDates();
+        }
+        //This removes the dates of this reservation from the list of available days
+        removeDates(r);
 
     }
 
@@ -98,10 +102,61 @@ public class Site {
         this.availableDates = availableDates;
     }
 
-    private void getReservableDates(LocalDate endingDay){
-        //Make this return basically the inverse of the reservedDates list.
-        return;
+    /**
+     * removeDates takes in a reservation and removes the dates of the reservation from the list of available dates for this site.
+     * @param r is the reservation in question
+     */
+    private void removeDates(Reservation r){
+        ArrayList<LocalDate> newAvailableDates = new ArrayList<LocalDate>();
+        for (LocalDate d:this.availableDates) {
+            LocalDate start = r.getStartDate();
+            LocalDate end = r.getEndDate();
 
+            if(start.isEqual(end)){
+                if(!d.isEqual(start)){
+                    newAvailableDates.add(d);
+                }
+            } else {
+                while (!start.isEqual(end)) {
+                    if (!d.isEqual(start)) {
+                        newAvailableDates.add(d);
+                    }
+                    start = start.plusDays(1);
+                }
+            }
+        }
+        this.availableDates = newAvailableDates;
+    }
+
+    /**
+     * isAvailable checks if this site is available along this stretch of dates. Returns true if available
+     * @param start the start date for the reservation
+     * @param end the end date for the reservation
+     * @return true if the site is available for this stretch of days
+     */
+    public boolean isAvailable(LocalDate start, LocalDate end){
+            if(start.isEqual(end)){
+                for (LocalDate d:this.availableDates){
+                    if(d.isEqual(start)){
+                        return true;
+                    }
+                }
+                return false;
+            } else {
+                while (!start.isEqual(end)) {
+                    boolean haveHitAvailableDay = false;
+                    for (LocalDate d:this.availableDates){
+                        if(d.isEqual(start)){
+                            haveHitAvailableDay = true;
+                        }
+                    }
+                    if(!haveHitAvailableDay){
+                        return false;
+                    }
+                    start = start.plusDays(1);
+                }
+                return true;
+            }
     }
 
 }

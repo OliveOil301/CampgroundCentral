@@ -1,6 +1,7 @@
 package main.java.Camping;
 
 import main.java.Exceptions.InvalidGroupException;
+import main.java.Exceptions.InvalidSiteException;
 import main.java.Utilities.CSVManager;
 
 import java.io.BufferedReader;
@@ -79,6 +80,17 @@ public class GroupManager {
                 }
             }
         }
+    }
+
+    public Site getSiteFromString(String s) throws InvalidSiteException {
+        for (Group g:this.groups) {
+            for (Site site:g.getSitesInGroup()) {
+                if(site.getSiteName().equals(s)){
+                    return site;
+                }
+            }
+        }
+        throw new InvalidSiteException("This site does not exist");
     }
 
 
