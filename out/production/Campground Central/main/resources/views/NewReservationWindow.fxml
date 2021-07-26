@@ -41,8 +41,8 @@
                               </HBox>
                               <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="406.0">
                                  <children>
-                                    <JFXDatePicker promptText="Start Date" />
-                                    <JFXDatePicker promptText="End Date" />
+                                    <JFXDatePicker fx:id="startDateBox" promptText="Start Date" />
+                                    <JFXDatePicker fx:id="endDateBox" promptText="End Date" />
                                  </children>
                                  <VBox.margin>
                                     <Insets top="10.0" />
@@ -53,13 +53,13 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                                  <children>
-                                    <JFXTextField prefHeight="25.0" prefWidth="95.0" promptText="Vehicle Make" />
-                                    <JFXTextField layoutX="10.0" layoutY="10.0" promptText="Vehicle Model">
+                                    <JFXTextField fx:id="vehicleMakeBox" prefHeight="25.0" prefWidth="95.0" promptText="Vehicle Make" />
+                                    <JFXTextField fx:id="vehicleModelBox" layoutX="10.0" layoutY="10.0" promptText="Vehicle Model">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
                                     </JFXTextField>
-                                    <JFXTextField layoutX="145.0" layoutY="10.0" prefHeight="25.0" prefWidth="93.0" promptText="Vehicle License">
+                                    <JFXTextField fx:id="vehicleLicenseBox" layoutX="145.0" layoutY="10.0" prefHeight="25.0" prefWidth="93.0" promptText="Vehicle License">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
@@ -68,13 +68,13 @@
                               </HBox>
                               <HBox layoutX="10.0" layoutY="90.0" prefHeight="50.0" prefWidth="406.0">
                                  <children>
-                                    <JFXTextField prefHeight="25.0" prefWidth="95.0" promptText="Camper Make" />
-                                    <JFXTextField layoutX="10.0" layoutY="10.0" promptText="Camper Model">
+                                    <JFXTextField fx:id="camperMakeBox" prefHeight="25.0" prefWidth="95.0" promptText="Camper Make" />
+                                    <JFXTextField fx:id="camperModelBox" layoutX="10.0" layoutY="10.0" promptText="Camper Model">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
                                     </JFXTextField>
-                                    <JFXTextField layoutX="145.0" layoutY="10.0" prefHeight="25.0" prefWidth="93.0" promptText="Camper License">
+                                    <JFXTextField fx:id="camperLicenseBox" layoutX="145.0" layoutY="10.0" prefHeight="25.0" prefWidth="93.0" promptText="Camper License">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
@@ -100,8 +100,8 @@
                               <Label prefHeight="35.0" prefWidth="216.0" styleClass="headline-3" text="Billing Information" />
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <JFXTextField prefHeight="25.0" prefWidth="102.0" promptText="First Name" />
-                                    <JFXTextField layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="109.0" promptText="Last Name">
+                                    <JFXTextField fx:id="firstNameBox" prefHeight="25.0" prefWidth="102.0" promptText="First Name" />
+                                    <JFXTextField fx:id="lastNameBox" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="109.0" promptText="Last Name">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
@@ -113,8 +113,8 @@
                               </HBox>
                               <HBox layoutX="10.0" layoutY="45.0" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <JFXTextField prefHeight="25.0" prefWidth="175.0" promptText="Street" />
-                                    <JFXTextField layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="116.0" promptText="City">
+                                    <JFXTextField fx:id="streetBox" prefHeight="25.0" prefWidth="175.0" promptText="Street" />
+                                    <JFXTextField fx:id="cityBox" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="116.0" promptText="City">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
@@ -131,7 +131,17 @@
                               </HBox>
                               <HBox layoutX="10.0" layoutY="78.0" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <JFXTextField prefHeight="25.0" prefWidth="86.0" promptText="Zip code" />
+                                    <JFXTextField fx:id="zipCodeBox" prefHeight="25.0" prefWidth="86.0" promptText="Zip code" />
+                                    <JFXTextField fx:id="emailBox" prefHeight="25.0" prefWidth="158.0" promptText="Zip code" text="Email">
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="phoneNumberBox" layoutX="111.0" layoutY="10.0" prefHeight="25.0" prefWidth="158.0" promptText="Zip code" text="Phone Number">
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </JFXTextField>
                                  </children>
                                  <VBox.margin>
                                     <Insets top="10.0" />
@@ -151,7 +161,7 @@
                               <Insets bottom="20.0" right="30.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton layoutX="10.0" layoutY="10.0" ripplerFill="#cbe5c1" text="Save &amp; Exit">
+                        <JFXButton layoutX="10.0" layoutY="10.0" onAction="#handleSaveAndExitButton" ripplerFill="#cbe5c1" text="Save &amp; Exit">
                            <HBox.margin>
                               <Insets bottom="20.0" />
                            </HBox.margin>
