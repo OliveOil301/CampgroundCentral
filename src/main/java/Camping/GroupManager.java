@@ -1,5 +1,7 @@
 package main.java.Camping;
 
+import main.java.App;
+import main.java.Database.ReservationData;
 import main.java.Exceptions.InvalidGroupException;
 import main.java.Exceptions.InvalidSiteException;
 import main.java.Utilities.CSVManager;
@@ -76,6 +78,7 @@ public class GroupManager {
                 for (Site s:g.getSitesInGroup()) {
                     if(s.getSiteName().equals(r.getSiteName())){
                         s.addReservation(r);
+                        App.reservationData.addReservationToDatabase(r);
                     }
                 }
             }

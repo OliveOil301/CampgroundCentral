@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ReservationData extends Data {
 
@@ -115,28 +116,50 @@ public class ReservationData extends Data {
     private ArrayList<Guest> getGuestsFromID(ReservationID ID) {
         ArrayList<Guest> guestList = new ArrayList<>();
 
-        String str = "select * from Reservations where reservationID = ?";
-        try {
-            PreparedStatement ps = conn.prepareStatement(str);
-            ps.setString(1, ID.getAlphanumericCode());
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                String[] Guest = new String[4];
-                Guest[0] = rs.getString("name");
-                Guest[1] = rs.getString("guestNumber");
-                Guest[2] = rs.getString("reservationID");
-                Guest[3] = rs.getString("phoneNumber");
-
-                Guest g = new Guest(Guest[0], Guest[1], new ReservationID(Guest[2]), Guest[3]);
-                guestList.add(g);
-            }
-            rs.close();
-            ps.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        String str = "select * from Reservations where reservationID = ?";
+//        try {
+//            PreparedStatement ps = conn.prepareStatement(str);
+//            ps.setString(1, ID.getAlphanumericCode());
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                String[] Guest = new String[4];
+//                Guest[0] = rs.getString("name");
+//                Guest[1] = rs.getString("guestNumber");
+//                Guest[2] = rs.getString("reservationID");
+//                Guest[3] = rs.getString("phoneNumber");
+//
+//                Guest g = new Guest(Guest[0], Guest[1], new ReservationID(Guest[2]), Guest[3]);
+//                guestList.add(g);
+//            }
+//            rs.close();
+//            ps.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return guestList;
     }
 
 
+    public void addReservationToDatabase(Reservation r){
+        try {
+            String str = "insert into Reservations (reservationID, startDate, endDate, siteName, customerName, phoneNumber, vehicleMake, vehicleModel, vehicleLicense, camperMake, camperModel, camperLicense) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(str);
+            ps.setString(1, r.getReservationID().getAlphanumericCode());
+            ps.setString(2, getStringFromLocalDate(r.getStartDate()));
+            ps.setString(3, getStringFromLocalDate(r.getEndDate()));
+            ps.setString(4, r.getSiteName());
+            ps.setString(5, r.getCustomerName()[0] + " " + r.getCustomerName()[1]);
+            ps.setString(6, r.getPhoneNumber());
+            ps.setString(7, r.getVehicleMake());
+            ps.setString(8, r.getVehicleModel());
+            ps.setString(9, r.getVehicleLicense());
+            ps.setString(10, r.getCamperMake());
+            ps.setString(11, r.getCamperModel());
+            ps.setString(12, r.getCamperLicense());
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to add edge");
+        }
+    }
 }

@@ -21,7 +21,6 @@ public class Reservation {
     private String camperModel;
     private String camperLicense;
 
-    private ArrayList<String[]> guests;
 
 
     //Getters below here--------
@@ -73,8 +72,8 @@ public class Reservation {
         return camperLicense;
     }
 
-    public ArrayList<String[]> getGuests() {
-        return guests;
+    public ArrayList<Guest> getGuests() {
+        return guestList;
     }
 
 
@@ -123,8 +122,8 @@ public class Reservation {
         this.camperLicense = camperLicense;
     }
 
-    public void setGuests(ArrayList<String[]> guests) {
-        this.guests = guests;
+    public void setGuests(ArrayList<Guest> guests) {
+        this.guestList = guestList;
     }
 
     //Constructors-----------------------------
@@ -141,6 +140,20 @@ public class Reservation {
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
         this.guestList = guestList;
+        this.vehicleMake = vehicleMake;
+        this.vehicleModel = vehicleModel;
+        this.vehicleLicense = vehicleLicense;
+        this.camperMake = camperMake;
+        this.camperModel = camperModel;
+        this.camperLicense = camperLicense;
+    }
+
+    public Reservation(LocalDate startDate, LocalDate endDate, String siteName, String[] customerName, String phoneNumber, String vehicleMake, String vehicleModel, String vehicleLicense, String camperMake, String camperModel, String camperLicense) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.siteName = siteName;
+        this.customerName = customerName;
+        this.phoneNumber = phoneNumber;
         this.vehicleMake = vehicleMake;
         this.vehicleModel = vehicleModel;
         this.vehicleLicense = vehicleLicense;
@@ -170,14 +183,14 @@ public class Reservation {
         //If it can't then an exception must be thrown that the controller can handle.
     }
 
-    public void addGuest(String[] newGuest){
-        this.guests.add(newGuest);
+    public void addGuest(Guest newGuest){
+        this.guestList.add(newGuest);
         //also need to add to database
     }
 
 
-    public void addGuests(ArrayList<String[]> newGuests){
-        this.guests.addAll(newGuests);
+    public void addGuests(ArrayList<Guest> newGuests){
+        this.guestList.addAll(newGuests);
         //also need to add to database
     }
 

@@ -7,18 +7,25 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.App;
 import com.opencsv.CSVWriter;
 import main.java.Camping.Group;
+import main.java.Camping.Reservation;
 import main.java.Camping.Site;
+import main.java.Exceptions.InvalidReservationIDException;
 import main.java.Exceptions.InvalidSiteException;
 
 
@@ -162,6 +169,8 @@ public class NewReservationWindowController {
         //This sets the validators for all the required fields
         setValidators();
 
+        //This sets the rests for the validators when you change the values
+        setChangeListeners();
 
     }
 
@@ -201,9 +210,18 @@ public class NewReservationWindowController {
 
 
     @FXML
-    private void handleSaveAndExitButton() throws IOException {
-
-
+    private void handleSaveAndExitButton() throws IOException, InvalidReservationIDException {
+        if(goodForSubmission()){
+            String[] customerName = new String[2];
+            customerName[0] = firstNameBox.getText();
+            customerName[1] = lastNameBox.getText();
+            Reservation r = new Reservation(startDateBox.getValue(), endDateBox.getValue(), siteComboBox.getValue(), customerName, phoneNumberBox.getText(), vehicleMakeBox.getText(), vehicleModelBox.getText(), vehicleLicenseBox.getText(), camperMakeBox.getText(), camperModelBox.getText(), camperLicenseBox.getText() );
+            r.setToNextID();
+            App.groupManager.addReservation(r);
+            System.out.println("We submitted??");
+            //No point in retyping this code
+            handleCancelButton();
+        }
 
     }
 
@@ -211,7 +229,7 @@ public class NewReservationWindowController {
 
     private boolean goodForSubmission(){
         boolean good = true;
-        if(siteComboBox.getValue().equals("Site")){
+        if(siteComboBox.getValue() == null){
             good = false;
             siteComboBox.validate();
         }
@@ -225,16 +243,37 @@ public class NewReservationWindowController {
         }
         if(firstNameBox.getText().equals("")){
             good = false;
-            siteComboBox.validate();
-        }if(siteComboBox.getValue().equals("Site")){
+            firstNameBox.validate();
+        }if(lastNameBox.getText().equals("")){
+            good = false;
+            lastNameBox.validate();
+        }
+        if(streetBox.getText().equals("")){
+            good = false;
+            streetBox.validate();
+        }
+        if(cityBox.getText().equals("")){
+            good = false;
+            cityBox.validate();
+        }
+        if(stateComboBox.getValue() == null){
+            good = false;
+            stateComboBox.validate();
+        }
+        if(zipCodeBox.getText().equals("") || zipCodeBox.getText().length() != 5){
+            good = false;
+            zipCodeBox.validate();
+        }
+        try {
+            if(!siteIsOpenThatPeriod(siteComboBox.getValue(), startDateBox.getValue(), endDateBox.getValue())){
+                startDateBox.validate();
+                endDateBox.validate();
+                good = false;
+            }
+        } catch (Exception e) {
             good = false;
             siteComboBox.validate();
         }
-        if(siteComboBox.getValue().equals("Site")){
-            good = false;
-            siteComboBox.validate();
-        }
-
 
         return good;
     }
@@ -335,6 +374,10 @@ public class NewReservationWindowController {
         siteComboBox.setItems(ComboBoxItems);
     }
 
+
+    /**
+     * setValidators sets the validators for all inputs that are required or need error checking
+     */
     private void setValidators(){
         //The validators start here:---------------------
         setValidator(siteComboBox, "Site Required");
@@ -371,6 +414,49 @@ public class NewReservationWindowController {
     }
 
 
+    private void setListener(JFXTextField t){
+        t.setOnKeyTyped(
+                new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        t.resetValidation();
+                    }
+                }
+        );
+    }
+    private void setListener(JFXComboBox<String> t){
+        t.valueProperty().addListener(
+                new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                        t.resetValidation();
+                    }
+                }
+        );
+    }
+    private void setListener(JFXDatePicker t){
+        t.valueProperty().addListener(
+                new ChangeListener<LocalDate>() {
+                    @Override
+                    public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                        t.resetValidation();
+                    }
+                }
+        );
+    }
+
+    private void setChangeListeners(){
+        setListener(siteComboBox);
+        setListener(startDateBox);
+        setListener(endDateBox);
+        setListener(firstNameBox);
+        setListener(lastNameBox);
+        setListener(streetBox);
+        setListener(cityBox);
+        setListener(stateComboBox);
+        setListener(zipCodeBox);
+        setListener(emailBox);
+    }
 
     private boolean siteIsOpenThatPeriod(String s, LocalDate start, LocalDate end) throws InvalidSiteException {
         Site site = App.groupManager.getSiteFromString(s);

@@ -47,6 +47,7 @@ public class App extends Application {
         try {
             groupManager = siteData.getAllSites();
             reservationData = new ReservationData();
+            groupManager = reservationData.loadAllReservations(groupManager);
 
         } catch (Exception e) {
             e.printStackTrace();

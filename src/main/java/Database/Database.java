@@ -13,7 +13,7 @@ public class Database {
 
     static Connection conn = null;
     // Url for live code
-    protected final static String url = "jdbc:derby:CCDB;";
+    protected final static String url = "jdbc:derby:CCDB;create=true";
     // Url for testing
     private final static String testURL = "jdbc:derby://localhost:1527/CCDB;create=true";
 
@@ -74,31 +74,50 @@ public class Database {
 
     public static void createTables() {
         try {
-            if (isTableEmpty()) {
-                String tbl1 =
-                        "create table Sites (siteGroup varchar(50) not null, siteName varchar(50) not null, siteType varchar(50) not null, primary key (siteName))";
-                PreparedStatement ps1 = conn.prepareStatement(tbl1);
-                ps1.execute();
+            String tbl1 =
+                    "create table Sites (siteGroup varchar(50) not null, siteName varchar(50) not null, siteType varchar(50) not null, primary key (siteName))";
+            PreparedStatement ps1 = conn.prepareStatement(tbl1);
+            ps1.execute();
+        } catch (Exception e) {
+            System.out.println("Table creation failed");
+            e.printStackTrace();
+        }
 
-                String tbl2 =
-                        "create table Users (employeeID varchar(50) not null, name varchar(50), password varchar(100), email varchar(250), type varchar(50), phoneNumber varchar(100), deleted boolean, primary key(employeeID))";
-                PreparedStatement ps2 = conn.prepareStatement(tbl2);
-                ps2.execute();
 
-                String tbl3 =
-                        "create table Reservations (reservationID varchar(50) not null, startDate varchar(50) not null, endDate varchar(50) not null, siteName varchar(50) not null, customerName varchar(250) not null, phoneNumber varchar(100) not null, vehicleMake varchar(20) not null, vehicleModel varchar(20) not null, vehicleLicense varchar(20) not null, camperMake varchar(20), camperModel varchar(20), camperLicense varchar(20), primary key(reservationID))";
-                PreparedStatement ps3 = conn.prepareStatement(tbl3);
-                ps3.execute();
+        try {
+            String tbl2 =
+                    "create table Users (employeeID varchar(50) not null, name varchar(50), password varchar(100), email varchar(250), type varchar(50), phoneNumber varchar(100), deleted boolean, primary key(employeeID))";
+            PreparedStatement ps2 = conn.prepareStatement(tbl2);
+            ps2.execute();
+        } catch (Exception e) {
+            System.out.println("Table creation failed");
+            e.printStackTrace();
+        }
 
-                String tbl4 =
-                        "create table ShoppingItems (itemNumber integer not null, name varchar(100) not null, Description varchar(500) not null, price double not null, pricePerWhat varchar(50) not null, primary key(itemNumber))";
-                PreparedStatement ps4 = conn.prepareStatement(tbl4);
-                ps4.execute();
 
-                String tbl5 =
-                        "create table Guests (guestNumber integer not null, reservationID varchar(50) not null, name varchar(100) not null, phoneNumber varchar(500), primary key(guestNumber))";
-                PreparedStatement ps5 = conn.prepareStatement(tbl5);
-                ps5.execute();
+        try {
+            String tbl3 =
+                    "create table Reservations (reservationID varchar(50) not null, startDate varchar(50) not null, endDate varchar(50) not null, siteName varchar(50) not null, customerName varchar(250) not null, phoneNumber varchar(100) not null, vehicleMake varchar(20) not null, vehicleModel varchar(20) not null, vehicleLicense varchar(20) not null, camperMake varchar(20), camperModel varchar(20), camperLicense varchar(20), primary key(reservationID))";
+            PreparedStatement ps3 = conn.prepareStatement(tbl3);
+            ps3.execute();
+        } catch (Exception e) {
+            System.out.println("Table creation failed");
+            e.printStackTrace();
+        }
+        try {
+            String tbl4 =
+                    "create table ShoppingItems (itemNumber integer not null, name varchar(100) not null, Description varchar(500) not null, price double not null, pricePerWhat varchar(50) not null, primary key(itemNumber))";
+            PreparedStatement ps4 = conn.prepareStatement(tbl4);
+            ps4.execute();
+        } catch (Exception e) {
+            System.out.println("Table creation failed");
+            e.printStackTrace();
+        }
+        try {
+            String tbl5 =
+                    "create table Guests (guestNumber integer not null, reservationID varchar(50) not null, name varchar(100) not null, phoneNumber varchar(500), primary key(guestNumber))";
+            PreparedStatement ps5 = conn.prepareStatement(tbl5);
+            ps5.execute();
                 //---------------------------------------------------
                 //This is a table where information needed on startup is stored. Maybe....
 //                String tbl7 =
@@ -107,7 +126,7 @@ public class Database {
 //                ps7.execute();
 
 
-            }
+
         } catch (Exception e) {
             System.out.println("Table creation failed");
             e.printStackTrace();

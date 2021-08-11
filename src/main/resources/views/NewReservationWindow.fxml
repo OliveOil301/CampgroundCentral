@@ -11,13 +11,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="450.0" prefWidth="550.0" style="-fx-background-color: White;" stylesheets="@MainTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controllers.NewReservationWindowController">
+<AnchorPane minHeight="470.0" minWidth="550.0" prefHeight="470.0" prefWidth="550.0" style="-fx-background-color: White;" stylesheets="@MainTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controllers.NewReservationWindowController">
    <children>
       <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox prefHeight="800.0" prefWidth="550.0">
                <children>
-                  <Label styleClass="headline-2" text="New Reservaiton">
+                  <Label styleClass="headline-2" text="New Reservation">
                      <VBox.margin>
                         <Insets left="20.0" top="15.0" />
                      </VBox.margin>
@@ -36,7 +36,7 @@
                                     <JFXComboBox fx:id="siteComboBox" prefHeight="25.0" promptText="Site" />
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </HBox>
                               <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="406.0">
@@ -45,12 +45,12 @@
                                     <JFXDatePicker fx:id="endDateBox" promptText="End Date" />
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </HBox>
                               <HBox layoutX="10.0" layoutY="46.0" prefHeight="50.0" prefWidth="406.0">
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                                  <children>
                                     <JFXTextField fx:id="vehicleMakeBox" prefHeight="25.0" prefWidth="95.0" promptText="Vehicle Make" />
@@ -108,7 +108,7 @@
                                     </JFXTextField>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </HBox>
                               <HBox layoutX="10.0" layoutY="45.0" prefHeight="100.0" prefWidth="200.0">
@@ -126,25 +126,25 @@
                                     </JFXComboBox>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </HBox>
                               <HBox layoutX="10.0" layoutY="78.0" prefHeight="100.0" prefWidth="200.0">
                                  <children>
                                     <JFXTextField fx:id="zipCodeBox" prefHeight="25.0" prefWidth="86.0" promptText="Zip code" />
-                                    <JFXTextField fx:id="emailBox" prefHeight="25.0" prefWidth="158.0" promptText="Zip code" text="Email">
+                                    <JFXTextField fx:id="emailBox" prefHeight="25.0" prefWidth="158.0" promptText="Email">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
                                     </JFXTextField>
-                                    <JFXTextField fx:id="phoneNumberBox" layoutX="111.0" layoutY="10.0" prefHeight="25.0" prefWidth="158.0" promptText="Zip code" text="Phone Number">
+                                    <JFXTextField fx:id="phoneNumberBox" layoutX="111.0" layoutY="10.0" prefHeight="25.0" prefWidth="158.0" promptText="Phone Number">
                                        <HBox.margin>
                                           <Insets left="15.0" />
                                        </HBox.margin>
                                     </JFXTextField>
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </HBox>
                            </children>

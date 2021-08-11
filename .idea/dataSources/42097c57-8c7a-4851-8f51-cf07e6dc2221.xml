@@ -17,63 +17,202 @@
     <schema id="10" parent="1" name="SYSIBM"/>
     <schema id="11" parent="1" name="SYSPROC"/>
     <schema id="12" parent="1" name="SYSSTAT"/>
-    <table id="13" parent="2" name="SITES"/>
-    <table id="14" parent="2" name="USERS"/>
-    <column id="15" parent="13" name="SITENAME">
+    <table id="13" parent="2" name="GUESTS"/>
+    <table id="14" parent="2" name="RESERVATIONS"/>
+    <table id="15" parent="2" name="SHOPPINGITEMS"/>
+    <table id="16" parent="2" name="SITES"/>
+    <table id="17" parent="2" name="USERS"/>
+    <column id="18" parent="13" name="GUESTNUMBER">
       <Position>1</Position>
-      <DataType>VARCHAR(50)|12s</DataType>
+      <DataType>INTEGER|4s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="16" parent="13" name="SITETYPE">
+    <column id="19" parent="13" name="RESERVATIONID">
       <Position>2</Position>
       <DataType>VARCHAR(50)|12s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="17" parent="13" name="SQL210627220950940">
+    <column id="20" parent="13" name="NAME">
+      <Position>3</Position>
+      <DataType>VARCHAR(100)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="21" parent="13" name="PHONENUMBER">
+      <Position>4</Position>
+      <DataType>VARCHAR(500)|12s</DataType>
+    </column>
+    <index id="22" parent="13" name="SQL210810200738720">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>GUESTNUMBER</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="23" parent="13" name="SQL210810200738720">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>GUESTNUMBER</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="24" parent="14" name="RESERVATIONID">
+      <Position>1</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="25" parent="14" name="STARTDATE">
+      <Position>2</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="26" parent="14" name="ENDDATE">
+      <Position>3</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="27" parent="14" name="SITENAME">
+      <Position>4</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="28" parent="14" name="CUSTOMERNAME">
+      <Position>5</Position>
+      <DataType>VARCHAR(250)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="29" parent="14" name="PHONENUMBER">
+      <Position>6</Position>
+      <DataType>VARCHAR(100)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="30" parent="14" name="VEHICLEMAKE">
+      <Position>7</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="31" parent="14" name="VEHICLEMODEL">
+      <Position>8</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="32" parent="14" name="VEHICLELICENSE">
+      <Position>9</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="33" parent="14" name="CAMPERMAKE">
+      <Position>10</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+    </column>
+    <column id="34" parent="14" name="CAMPERMODEL">
+      <Position>11</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+    </column>
+    <column id="35" parent="14" name="CAMPERLICENSE">
+      <Position>12</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+    </column>
+    <index id="36" parent="14" name="SQL210810200738700">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>RESERVATIONID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="37" parent="14" name="SQL210810200738700">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>RESERVATIONID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="38" parent="15" name="ITEMNUMBER">
+      <Position>1</Position>
+      <DataType>INTEGER|4s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="39" parent="15" name="NAME">
+      <Position>2</Position>
+      <DataType>VARCHAR(100)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="40" parent="15" name="DESCRIPTION">
+      <Position>3</Position>
+      <DataType>VARCHAR(500)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="41" parent="15" name="PRICE">
+      <Position>4</Position>
+      <DataType>DOUBLE|8s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="15" name="PRICEPERWHAT">
+      <Position>5</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="43" parent="15" name="SQL210810200738710">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ITEMNUMBER</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="44" parent="15" name="SQL210810200738710">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ITEMNUMBER</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="45" parent="16" name="SITEGROUP">
+      <Position>1</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="46" parent="16" name="SITENAME">
+      <Position>2</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="47" parent="16" name="SITETYPE">
+      <Position>3</Position>
+      <DataType>VARCHAR(50)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="48" parent="16" name="SQL210810200738640">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SITENAME</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="18" parent="13" name="SQL210627220950940">
+    <key id="49" parent="16" name="SQL210810200738640">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SITENAME</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="19" parent="14" name="EMPLOYEEID">
+    <column id="50" parent="17" name="EMPLOYEEID">
       <Position>1</Position>
       <DataType>VARCHAR(50)|12s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="20" parent="14" name="NAME">
+    <column id="51" parent="17" name="NAME">
       <Position>2</Position>
       <DataType>VARCHAR(50)|12s</DataType>
     </column>
-    <column id="21" parent="14" name="PASSWORD">
+    <column id="52" parent="17" name="PASSWORD">
       <Position>3</Position>
       <DataType>VARCHAR(100)|12s</DataType>
     </column>
-    <column id="22" parent="14" name="EMAIL">
+    <column id="53" parent="17" name="EMAIL">
       <Position>4</Position>
       <DataType>VARCHAR(250)|12s</DataType>
     </column>
-    <column id="23" parent="14" name="TYPE">
+    <column id="54" parent="17" name="TYPE">
       <Position>5</Position>
       <DataType>VARCHAR(50)|12s</DataType>
     </column>
-    <column id="24" parent="14" name="PHONENUMBER">
+    <column id="55" parent="17" name="PHONENUMBER">
       <Position>6</Position>
       <DataType>VARCHAR(100)|12s</DataType>
     </column>
-    <column id="25" parent="14" name="DELETED">
+    <column id="56" parent="17" name="DELETED">
       <Position>7</Position>
       <DataType>BOOLEAN|16s</DataType>
     </column>
-    <index id="26" parent="14" name="SQL210627220950950">
+    <index id="57" parent="17" name="SQL210810200738680">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>EMPLOYEEID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="27" parent="14" name="SQL210627220950950">
+    <key id="58" parent="17" name="SQL210810200738680">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>EMPLOYEEID</ColNames>
       <Primary>1</Primary>
