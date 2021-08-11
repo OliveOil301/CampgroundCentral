@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXToggleNode?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="470.0" prefWidth="500.0" stylesheets="@MainTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controllers.ReservationWizardPaneController">
+   <children>
+      <VBox minWidth="-Infinity" prefHeight="470.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label styleClass="headline-2" stylesheets="@MainTheme.css" text="Reservation Wizard">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+            <VBox prefHeight="95.0" prefWidth="400.0">
+               <children>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                     <children>
+                        <Separator orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <VBox>
+                           <children>
+                              <Label styleClass="headline-3" text="Choose a time period for the reservation:" />
+                              <HBox prefHeight="30.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXDatePicker defaultColor="#28732b" promptText="Start Date" />
+                                    <JFXDatePicker defaultColor="#28732b" layoutX="10.0" layoutY="10.0" promptText="End Date" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <VBox.margin>
+                        <Insets left="20.0" top="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <Separator orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <VBox>
+                           <children>
+                              <Label styleClass="headline-3" text="Choose the type of site you would like:" />
+                              <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="200.0" spacing="15.0">
+                                 <children>
+                                    <JFXToggleNode text="50 Amp" />
+                                    <JFXToggleNode layoutX="10.0" layoutY="10.0" text="30 Amp" />
+                                    <JFXToggleNode layoutX="68.0" layoutY="10.0" text="W&amp;E" />
+                                    <JFXToggleNode layoutX="126.0" layoutY="10.0" text="Tent" />
+                                    <JFXToggleNode layoutX="169.0" layoutY="10.0" text="Rental" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton styleClass="button-contained" text="Find a site!" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

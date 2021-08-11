@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="470.0" minWidth="550.0" prefHeight="470.0" prefWidth="550.0" style="-fx-background-color: White;" stylesheets="@MainTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controllers.NewReservationWindowController">
+<AnchorPane minHeight="500.0" minWidth="550.0" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: White;" stylesheets="@MainTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controllers.NewReservationWindowController">
    <children>
       <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="800.0" prefWidth="550.0">
+            <VBox prefHeight="472.0" prefWidth="669.0">
                <children>
                   <Label styleClass="headline-2" text="New Reservation">
                      <VBox.margin>
@@ -41,8 +41,8 @@
                               </HBox>
                               <HBox layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="406.0">
                                  <children>
-                                    <JFXDatePicker fx:id="startDateBox" promptText="Start Date" />
-                                    <JFXDatePicker fx:id="endDateBox" promptText="End Date" />
+                                    <JFXDatePicker fx:id="startDateBox" defaultColor="#28732b" promptText="Start Date" />
+                                    <JFXDatePicker fx:id="endDateBox" defaultColor="#28732b" promptText="End Date" />
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="10.0" top="10.0" />
@@ -156,17 +156,17 @@
                   </HBox>
                   <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <JFXButton cancelButton="true" onAction="#handleCancelButton" ripplerFill="#cbe5c1" text="Cancel">
+                        <JFXButton cancelButton="true" onAction="#handleCancelButton" ripplerFill="#cbe5c1" styleClass="button-contained" text="Cancel">
                            <HBox.margin>
                               <Insets bottom="20.0" right="30.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton layoutX="10.0" layoutY="10.0" onAction="#handleSaveAndExitButton" ripplerFill="#cbe5c1" text="Save &amp; Exit">
+                        <JFXButton layoutX="10.0" layoutY="10.0" onAction="#handleSaveAndExitButton" ripplerFill="#cbe5c1" styleClass="button-contained" text="Save &amp; Exit">
                            <HBox.margin>
                               <Insets bottom="20.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton layoutX="62.0" layoutY="10.0" ripplerFill="#cbe5c1" text="Save &amp; Make Another Reservation">
+                        <JFXButton layoutX="62.0" layoutY="10.0" ripplerFill="#cbe5c1" styleClass="button-contained" text="Save &amp; Make Another Reservation">
                            <HBox.margin>
                               <Insets bottom="20.0" left="30.0" />
                            </HBox.margin>
@@ -175,6 +175,7 @@
                   </HBox>
                </children>
             </VBox>
+            <VBox prefHeight="200.0" prefWidth="0.0" />
          </children>
       </HBox>
    </children>

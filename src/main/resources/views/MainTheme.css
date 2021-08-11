@@ -356,53 +356,53 @@
 }
 
 /* ----------- TOGGLE-BUTTON -------------- */
-.jfx-toggle-button,
-.jfx-toggle-button:armed,
-.jfx-toggle-button:hover,
-.jfx-toggle-button:focused,
-.jfx-toggle-button:selected,
-.jfx-toggle-button:focused:selected {
-    /*-jfx-toggle-color: -primary;*/
-    -jfx-size: 10;
-    -fx-text-fill: -onBackground;
-}
+/*.jfx-toggle-button,*/
+/*.jfx-toggle-button:armed,*/
+/*.jfx-toggle-button:hover,*/
+/*.jfx-toggle-button:focused,*/
+/*.jfx-toggle-button:selected,*/
+/*.jfx-toggle-button:focused:selected {*/
+/*    !*-jfx-toggle-color: -primary;*!*/
+/*    -jfx-size: 10;*/
+/*    -fx-text-fill: -onBackground;*/
+/*}
 /* ----------- TOGGLE-NODE -------------- */
-.jfx-toggle-node{
-    -fx-min-width: 56px;
-    -fx-min-height: 56px;
-    -fx-pref-width: 56px;
-    -fx-pref-height: 56px;
-    -fx-max-width: 56px;
-    -fx-max-height: 56px;
-    -fx-background-color: -background;
-    -fx-text-fill: -onBackground;
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -jfx-rippler-fill: -primary;
-    -jfx-toggle-color: -primary;
-    -fx-border-radius: 0px;
-    -fx-background-radius: 0px;
-    -fx-border-width: 1px;
-    -fx-border-color: derive(-onBackground, 99%);
-}
-.jfx-toggle-node:selected{
-    -fx-text-fill: -onPrimary;
-}
-.jfx-toggle-node:selected > SVGPath{
-    -fx-fill: -onPrimary;
-}
-.jfx-toggle-node > SVGPath{
-    -fx-fill: -onBackground;
-}
+/*.jfx-toggle-node{*/
+/*    -fx-min-width: 56px;*/
+/*    -fx-min-height: 56px;*/
+/*    -fx-pref-width: 56px;*/
+/*    -fx-pref-height: 56px;*/
+/*    -fx-max-width: 56px;*/
+/*    -fx-max-height: 56px;*/
+/*    -fx-background-color: -background;*/
+/*    -fx-text-fill: -onBackground;*/
+/*    -fx-font-size: 20px;*/
+/*    -fx-font-weight: bold;*/
+/*    -jfx-rippler-fill: -primary;*/
+/*    -jfx-toggle-color: -primary;*/
+/*    -fx-border-radius: 0px;*/
+/*    -fx-background-radius: 0px;*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-border-color: derive(-onBackground, 99%);*/
+/*}*/
+/*.jfx-toggle-node:selected{*/
+/*    -fx-text-fill: -onPrimary;*/
+/*}*/
+/*.jfx-toggle-node:selected > SVGPath{*/
+/*    -fx-fill: -onPrimary;*/
+/*}*/
+/*.jfx-toggle-node > SVGPath{*/
+/*    -fx-fill: -onBackground;*/
+/*}*/
 
-.jfx-toggle-node .jfx-rippler{
-    -jfx-rippler-fill: -primary;
-}
+/*.jfx-toggle-node .jfx-rippler{*/
+/*    -jfx-rippler-fill: -primary;*/
+/*}*/
 
-.jfx-toggle-button {
-    -jfx-toggle-color: -primary;
-    -jfx-toggle-line-color: -primaryVariant;
-}
+/*.jfx-toggle-button {*/
+/*    -jfx-toggle-color: -primary;*/
+/*    -jfx-toggle-line-color: -primaryVariant;*/
+/*}*/
 
 /* ----------- SLIDER -------------- */
 /*.jfx-slider {*/
@@ -412,24 +412,23 @@
 /*.jfx-progress-bar > .bar {*/
 /*    -fx-background-color: -primary;*/
 /*}*/
-
 /* ----------- BUTTON -------------- */
 .button-contained{
     -fx-background-color: -primary;
-    -fx-text-fill: -onPrimary;
-    -fx-padding: 0px 16px;
-    -fx-pref-height: 36px;
-    -fx-min-width: 64px;
+    -fx-text-fill: -secondary;
+    -fx-font-size: 18;
+    -fx-padding: 0px 12px;
+    -fx-pref-height: 30px;
+    -fx-min-width: 50px;
 }
 .button-outlined{
     -fx-background-color: -primary;
     -fx-border-color: -secondary;
-    -fx-border-radius: 10px;
-    -fx-text-fill: -onPrimary;
-    -fx-font-size: 24;
+    -fx-text-fill: -secondary;
+    -fx-font-size: 18;
     -fx-padding: 0px 16px;
-    -fx-pref-height: 40px;
-    -fx-min-width: 64px;
+    -fx-pref-height: 30px;
+    -fx-min-width: 50px;
 }
 .button-text{
     -fx-text-fill: -primary;

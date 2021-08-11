@@ -10,18 +10,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseDragEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.App;
-import com.opencsv.CSVWriter;
 import main.java.Camping.Group;
 import main.java.Camping.Reservation;
 import main.java.Camping.Site;
@@ -32,9 +28,6 @@ import main.java.Exceptions.InvalidSiteException;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class NewReservationWindowController {
 
@@ -170,7 +163,7 @@ public class NewReservationWindowController {
         setValidators();
 
         //This sets the rests for the validators when you change the values
-        setChangeListeners();
+        setListeners();
 
     }
 
@@ -233,11 +226,11 @@ public class NewReservationWindowController {
             good = false;
             siteComboBox.validate();
         }
-        if(startDateBox.getValue() == null){
+        if(startDateBox.getValue() == null || startDateBox.getValue().isBefore(LocalDate.now())){
             good = false;
             startDateBox.validate();
         }
-        if(endDateBox.getValue() == null){
+        if(endDateBox.getValue() == null || endDateBox.getValue().isBefore(startDateBox.getValue()) || endDateBox.getValue().isBefore(LocalDate.now())){
             good = false;
             endDateBox.validate();
         }
@@ -445,7 +438,7 @@ public class NewReservationWindowController {
         );
     }
 
-    private void setChangeListeners(){
+    private void setListeners(){
         setListener(siteComboBox);
         setListener(startDateBox);
         setListener(endDateBox);
