@@ -36,8 +36,8 @@
                               <Label styleClass="headline-3" text="Choose a time period for the reservation:" />
                               <HBox prefHeight="30.0" prefWidth="200.0">
                                  <children>
-                                    <JFXDatePicker defaultColor="#28732b" promptText="Start Date" />
-                                    <JFXDatePicker defaultColor="#28732b" layoutX="10.0" layoutY="10.0" promptText="End Date" />
+                                    <JFXDatePicker fx:id="startDateBox" defaultColor="#28732b" promptText="Start Date" />
+                                    <JFXDatePicker fx:id="endDateBox" defaultColor="#28732b" layoutX="10.0" layoutY="10.0" promptText="End Date" />
                                  </children>
                                  <VBox.margin>
                                     <Insets left="20.0" top="10.0" />
