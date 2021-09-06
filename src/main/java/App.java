@@ -33,7 +33,7 @@ public class App extends Application {
 
     //These two LocalDates are for when you select a date on the scheduling page. These are used by NewReservationWindow to autofill the date boxes
     public static LocalDate newReservationStart;
-    public static LocalDate newReservationEnd;
+    public static Reservation viewingReservation;
 
 
     //Database stuff

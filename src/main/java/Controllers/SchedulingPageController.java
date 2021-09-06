@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -29,6 +30,7 @@ import java.io.IOException;
 
 import java.time.Month;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 public class SchedulingPageController {
@@ -64,7 +66,7 @@ public class SchedulingPageController {
     private int daysToDisplay = 500;
 
     //Reading the .csv's:--------------------------
-    public void initialize() throws IOException{
+    public void initialize() throws IOException, InvalidSiteException {
         DateRangeHBox.setPadding(new Insets(0,0,0,8));
 
         //year = new Year(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
@@ -464,10 +466,15 @@ public class SchedulingPageController {
 
 
     @FXML
-    private void handleNewReservationButton() throws IOException {
+    private void handleNewReservationButton(){
         if(App.newReservationWindows == 0) {
             App.newReservationStage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/main/resources/views/NewReservationWindow.fxml"));
+            Parent root = null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("/main/resources/views/NewReservationWindow.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Scene scene = new Scene(root);
             App.newReservationStage.setScene(scene);
             App.newReservationStage.show();
@@ -476,7 +483,7 @@ public class SchedulingPageController {
     }
 
 
-    private void loadReservations(LocalDate dateToStop){
+    private void loadReservations(LocalDate dateToStop) throws InvalidSiteException {
 
         for (Group g:App.groupManager.getGroups()) {
             //Make a new HBox with the correct size to space it right
@@ -496,32 +503,35 @@ public class SchedulingPageController {
                 reservationsBox.setSpacing(3);
                 reservationsBox.setPadding(new Insets(2, 0, 5, 3));
                 if(s.getListOfReservations().size() == 0){
-                    //We are making buttons for the open days here and adding them to reservationsBox
-                    Button open = new Button();
-                    open.setStyle("-fx-background-color: -reservationOpen;\n" +
-                            "    -fx-text-fill: black;\n" +
-                            "    -fx-min-width: 32px;");
-                    open.setMinHeight(35);
-                    open.setPrefHeight(35);
-                    open.setMaxHeight(35);
-                    open.setMinWidth(500*20);
-                    open.setPrefWidth(500*20);
-                    open.setMaxWidth(500*20);
-                    reservationsBox.getChildren().add(open);//Adding the finished button to the Hbox
-
+                    reservationsBox.getChildren().add(makeOpenReservationButton(daysToDisplay));//Adding the open day button to the Hbox
                 } else {
-                    for (Reservation r : s.getListOfReservations()) {
-
-
-
-//                        LocalDate now = LocalDate.now();
-//                        int daysOpen = 0;
-//                        while(!now.isAfter(dateToStop)){
-//                            now = now.plusDays(1);
-//                            daysOpen ++;
-//                        }
+                    reservationsBox.getChildren().clear();
+                    try {
+                        reservationsBox.getChildren().setAll(showCompressedView(s).getChildren());
+                    } catch (InvalidSiteException e) {
+                        e.printStackTrace();
                     }
                 }
+                reservationsBox.setOnMouseEntered(
+                        event -> {
+                            System.out.println("ENTERED");
+                            reservationsBox.getChildren().clear();
+                            try {
+                                reservationsBox.getChildren().setAll(showExpandedView(s).getChildren());
+                            } catch (InvalidSiteException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                reservationsBox.setOnMouseExited(
+                        event -> {
+                            System.out.println("EXITED");
+                            reservationsBox.getChildren().clear();
+                            try {
+                                reservationsBox.getChildren().setAll(showCompressedView(s).getChildren());
+                            } catch (InvalidSiteException e) {
+                                e.printStackTrace();
+                            }
+                        });
                 mainReservationVBox.getChildren().add(reservationsBox);
 
                 Separator divider1 = new Separator();
@@ -536,20 +546,59 @@ public class SchedulingPageController {
 
     }
 
-    private String getOpenDayID(Site s, LocalDate d){
-        String site = s.getSiteName();
-        String date = getStringFromLocalDate(d);
-        return site + "_" + date;
+
+
+    private HBox showExpandedView(Site s) throws InvalidSiteException {
+        ArrayList<Reservation> reservations = App.groupManager.getSiteFromString(s.getSiteName()).getListOfReservations();
+        HBox endBox = new HBox();
+        endBox.setSpacing(3);
+        endBox.setPadding(new Insets(2, 0, 5, 3));
+        if(reservations == null || reservations.size() == 0){
+            for (int i = 0; i<daysToDisplay; i++){
+                endBox.getChildren().add(makeOpenReservationButton(1));
+            }
+            return endBox;
+        }
+        LocalDate today = LocalDate.now();
+        for (Reservation r:reservations) {
+            if(r.getStartDate().isEqual(today) || r.getStartDate().isAfter(today)){//If this reservation has not passed
+                LocalDate startDate = r.getStartDate();
+                if(today.isBefore(startDate)){
+                    LocalDate testNow = LocalDate.now();
+                    while(testNow.isBefore(r.getStartDate())){
+                        endBox.getChildren().add(makeOpenReservationButton(r.getStartDate()));
+                        testNow = testNow.plusDays(1);
+                    }
+                }
+                today = today.plusDays(r.getStartDate().compareTo(r.getEndDate()));
+                endBox.getChildren().add(makeReservationButton(r));
+            }
+        }
+        return new HBox();
     }
 
-    private Site getSiteFromOpenDayID(String s) throws InvalidSiteException {
-        return App.groupManager.getSiteFromString(s.substring(0,s.length()-12));
+    private HBox showCompressedView(Site s) throws InvalidSiteException {
+        ArrayList<Reservation> reservations = App.groupManager.getSiteFromString(s.getSiteName()).getListOfReservations();
+        HBox endBox = new HBox();
+        endBox.setSpacing(3);
+        endBox.setPadding(new Insets(2, 0, 5, 3));
+        if (reservations == null || reservations.size() == 0) {
+            endBox.getChildren().add(makeOpenReservationButton(daysToDisplay));
+            return endBox;
+        }
+        LocalDate today = LocalDate.now();
+        for (Reservation r : reservations) {
+            if (r.getStartDate().isEqual(today) || r.getStartDate().isAfter(today)) {//If this reservation has not passed
+                LocalDate startDate = r.getStartDate();
+                if (today.isBefore(startDate)) {
+                    endBox.getChildren().add(makeOpenReservationButton(today.compareTo(startDate)));
+                }
+                today = today.plusDays(r.getStartDate().compareTo(r.getEndDate()));
+                endBox.getChildren().add(makeReservationButton(r));
+            }
+        }
+        return new HBox();
     }
-
-    private LocalDate getDateFromOpenDayID(String s){
-        return  getDateFromString(s.substring(s.length()-10));
-    }
-
 
     private String getStringFromLocalDate(LocalDate date) {
         String day = Integer.toString(date.getDayOfMonth());
@@ -579,5 +628,80 @@ public class SchedulingPageController {
     }
 
 
+    private String getOpenDayID(Site s, LocalDate d){
+        String site = s.getSiteName();
+        String date = getStringFromLocalDate(d);
+        return site + "_" + date;
+    }
+
+    private Site getSiteFromOpenDayID(String s) throws InvalidSiteException {
+        return App.groupManager.getSiteFromString(s.substring(0,s.length()-12));
+    }
+
+    private LocalDate getDateFromOpenDayID(String s){
+        return  getDateFromString(s.substring(s.length()-10));
+    }
+
+
+
+
+    private Button makeOpenReservationButton(int days){
+        Button open = new Button();
+        open.setStyle("-fx-background-color: -reservationOpen;\n" +
+                "    -fx-text-fill: black;\n" +
+                "    -fx-min-width: 32px;");
+        open.setMinHeight(35);
+        open.setPrefHeight(35);
+        open.setMaxHeight(35);
+        open.setMinWidth(days*20);
+        open.setPrefWidth(days*20);
+        open.setMaxWidth(days*20);
+        return open;
+    }
+
+    private Button makeOpenReservationButton(LocalDate startDate){
+        Button open = new Button();
+        open.setStyle("-fx-background-color: -reservationOpen;\n" +
+                "    -fx-text-fill: black;\n" +
+                "    -fx-min-width: 32px;");
+        open.setMinHeight(35);
+        open.setPrefHeight(35);
+        open.setMaxHeight(35);
+        open.setOnAction(
+                event -> {
+                    App.newReservationStart = startDate;
+                    handleNewReservationButton();
+                }
+        );
+        open.setMinWidth(30);
+        open.setPrefWidth(30);
+        open.setMaxWidth(30);
+
+        return open;
+    }
+
+
+    private Button makeReservationButton(Reservation r){
+        Button reserved = new Button();
+        reserved.setStyle("-fx-background-color: -reservationTaken;\n" +
+                "    -fx-text-fill: black;\n" +
+                "    -fx-min-width: 32px;");
+        reserved.setMinHeight(35);
+        reserved.setPrefHeight(35);
+        reserved.setMaxHeight(35);
+        reserved.setOnAction(
+                event -> {
+                    App.viewingReservation = r;
+                    //TODO: Make the viewing Reservation stuff here
+                }
+        );
+        int reservationLength = 30*r.getStartDate().compareTo(r.getEndDate());
+        reserved.setMinWidth(reservationLength);
+        reserved.setPrefWidth(reservationLength);
+        reserved.setMaxWidth(reservationLength);
+
+
+        return reserved;
+    }
 
 }
