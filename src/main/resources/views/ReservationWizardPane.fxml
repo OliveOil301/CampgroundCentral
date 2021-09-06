@@ -5,12 +5,13 @@
 <?import com.jfoenix.controls.JFXToggleNode?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="470.0" prefWidth="500.0" stylesheets="@MainTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controllers.ReservationWizardPaneController">
+<AnchorPane prefHeight="450.0" prefWidth="550.0" stylesheets="@MainTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.Controllers.ReservationWizardPaneController">
    <children>
       <VBox minWidth="-Infinity" prefHeight="470.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -60,7 +61,7 @@
                         <VBox>
                            <children>
                               <Label styleClass="headline-3" text="Choose the type of site you would like:" />
-                              <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="200.0" spacing="15.0">
+                              <HBox prefHeight="30.0" prefWidth="200.0" spacing="15.0">
                                  <children>
                                     <JFXToggleNode text="50 Amp" />
                                     <JFXToggleNode layoutX="10.0" layoutY="10.0" text="30 Amp" />
@@ -69,7 +70,7 @@
                                     <JFXToggleNode layoutX="169.0" layoutY="10.0" text="Rental" />
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets left="15.0" top="5.0" />
                                  </VBox.margin>
                               </HBox>
                            </children>
@@ -81,11 +82,23 @@
                         <JFXButton styleClass="button-contained" text="Find a site!" />
                      </children>
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets top="15.0" />
                      </VBox.margin>
                   </HBox>
                </children>
             </VBox>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER">
+              <content>
+                <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="-Infinity" prefHeight="100.0" prefWidth="550.0">
+                     <children>
+                        <VBox fx:id="resultsVBox" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </ScrollPane>
          </children>
       </VBox>
    </children>

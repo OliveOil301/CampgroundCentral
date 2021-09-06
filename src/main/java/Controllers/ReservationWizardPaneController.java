@@ -2,6 +2,8 @@ package main.java.Controllers;
 
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
+
 
 public class ReservationWizardPaneController {
 
@@ -10,6 +12,9 @@ public class ReservationWizardPaneController {
 
     @FXML
     JFXDatePicker endDateBox;
+
+    @FXML
+    VBox resultsVBox;
 
 
     public void initialize(){

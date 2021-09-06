@@ -9,6 +9,8 @@
     -secondaryVairant: #155a17;
     -background: #FFFFFF;
     -backgroundVairant: #cbe5c1;
+    -reservationOpen: #008000;
+    -reservationTaken: #e3b07c;
     /*-requestResolvedColor: #e0e0e0;*/
     /*-requestResolvedColorReal: #e0e0e0;*/
     /*-surface: #FFFFFF;*/
@@ -444,6 +446,14 @@
     -fx-pref-height: 36px;
     -fx-min-width: 64px;
 }
+
+.reservation-open{
+    -fx-background-color: -reservationOpen;
+    -fx-text-fill: black;
+    -fx-pref-height: 24px;
+    -fx-min-width: 24px;
+}
+
 
 /* ----------- FLOATING ACTION BUTTON -------------- */
 .fab-default{

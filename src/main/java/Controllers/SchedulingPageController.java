@@ -1,9 +1,10 @@
 package main.java.Controllers;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,14 +19,15 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import main.java.App;
 import main.java.Camping.Group;
+import main.java.Camping.Reservation;
 import main.java.Camping.Site;
+import main.java.Exceptions.InvalidSiteException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 import java.time.Month;
-import java.util.Arrays;
 import java.time.LocalDate;
 
 
@@ -45,6 +47,9 @@ public class SchedulingPageController {
 
     @FXML
     private ScrollPane reservationScrollPane;
+
+    @FXML
+    private ScrollPane siteScrollPane;
 
     @FXML
     private AnchorPane dateAnchorPane;
@@ -408,16 +413,24 @@ public class SchedulingPageController {
 //
 //        }
 
+        loadReservations(LocalDate.now().plusDays(daysToDisplay+1));
 
         //A BUNCH OF LISTENERS____________________________
         dateScrollPane.hvalueProperty().addListener(observable -> {
-            handleDateScrolled();
+            handleDateScrolledH();
         });
         reservationScrollPane.hvalueProperty().addListener(observable -> {
-            handleReservationScrolled();
+            handleReservationScrolledH();
         });
 
-        }//End of initialize-----
+        siteScrollPane.vvalueProperty().addListener(observable -> {
+            handleSiteScrolledV();
+        });
+        reservationScrollPane.vvalueProperty().addListener(observable -> {
+            handleReservationScrolledV();
+        });
+
+    }//End of initialize-----
 
 
     private int dateDifference(LocalDate start, LocalDate end){
@@ -433,13 +446,20 @@ public class SchedulingPageController {
     }
 
 
-    private void handleReservationScrolled(){
+    private void handleReservationScrolledH(){
         dateScrollPane.setHvalue(reservationScrollPane.getHvalue());
     }
 
-
-    private void handleDateScrolled(){
+    private void handleDateScrolledH(){
         reservationScrollPane.setHvalue(dateScrollPane.getHvalue());
+    }
+
+    private void handleReservationScrolledV(){
+        siteScrollPane.setVvalue(reservationScrollPane.getVvalue());
+    }
+
+    private void handleSiteScrolledV(){
+        reservationScrollPane.setVvalue(siteScrollPane.getVvalue());
     }
 
 
@@ -455,6 +475,108 @@ public class SchedulingPageController {
         }
     }
 
+
+    private void loadReservations(LocalDate dateToStop){
+
+        for (Group g:App.groupManager.getGroups()) {
+            //Make a new HBox with the correct size to space it right
+            HBox groupNameSpaceBox = new HBox();
+            groupNameSpaceBox.setPrefHeight(58);
+            groupNameSpaceBox.setMinHeight(58);
+            mainReservationVBox.getChildren().add(groupNameSpaceBox);
+
+            Separator divider = new Separator();
+            divider.setOrientation(Orientation.HORIZONTAL);
+            divider.setPrefHeight(1);
+            divider.setMinHeight(1);
+            mainReservationVBox.getChildren().add(divider);
+
+            for (Site s:g.getSitesInGroup()) {
+                HBox reservationsBox = new HBox();
+                reservationsBox.setSpacing(3);
+                reservationsBox.setPadding(new Insets(2, 0, 5, 3));
+                if(s.getListOfReservations().size() == 0){
+                    //We are making buttons for the open days here and adding them to reservationsBox
+                    Button open = new Button();
+                    open.setStyle("-fx-background-color: -reservationOpen;\n" +
+                            "    -fx-text-fill: black;\n" +
+                            "    -fx-min-width: 32px;");
+                    open.setMinHeight(35);
+                    open.setPrefHeight(35);
+                    open.setMaxHeight(35);
+                    open.setMinWidth(500*20);
+                    open.setPrefWidth(500*20);
+                    open.setMaxWidth(500*20);
+                    reservationsBox.getChildren().add(open);//Adding the finished button to the Hbox
+
+                } else {
+                    for (Reservation r : s.getListOfReservations()) {
+
+
+
+//                        LocalDate now = LocalDate.now();
+//                        int daysOpen = 0;
+//                        while(!now.isAfter(dateToStop)){
+//                            now = now.plusDays(1);
+//                            daysOpen ++;
+//                        }
+                    }
+                }
+                mainReservationVBox.getChildren().add(reservationsBox);
+
+                Separator divider1 = new Separator();
+                divider1.setOrientation(Orientation.HORIZONTAL);
+                divider1.setPrefHeight(1);
+                divider1.setMinHeight(1);
+                mainReservationVBox.getChildren().add(divider1);
+
+            }
+        }
+        mainReservationVBox.getChildren().remove(mainReservationVBox.getChildren().size()-1);
+
+    }
+
+    private String getOpenDayID(Site s, LocalDate d){
+        String site = s.getSiteName();
+        String date = getStringFromLocalDate(d);
+        return site + "_" + date;
+    }
+
+    private Site getSiteFromOpenDayID(String s) throws InvalidSiteException {
+        return App.groupManager.getSiteFromString(s.substring(0,s.length()-12));
+    }
+
+    private LocalDate getDateFromOpenDayID(String s){
+        return  getDateFromString(s.substring(s.length()-10));
+    }
+
+
+    private String getStringFromLocalDate(LocalDate date) {
+        String day = Integer.toString(date.getDayOfMonth());
+        String month = Integer.toString(date.getMonthValue());
+        String year = Integer.toString(date.getYear());
+
+        if (day.length() == 1) {
+            day = "0" + day + "/";
+        } else {
+            day = day + "/";
+        }
+
+        if (month.length() == 1) {
+            month = "0" + month + "/";
+        } else {
+            month = month + "/";
+        }
+
+        return day + month + year;
+
+    }
+
+
+    private LocalDate getDateFromString(String date) {
+        // Date is in format dd/mm/yyyy with slashes
+        return LocalDate.of(Integer.parseInt(date.substring(6, 9)), Integer.parseInt(date.substring(3, 4)), Integer.parseInt(date.substring(0, 1)));
+    }
 
 
 

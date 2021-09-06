@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import main.java.Camping.GroupManager;
+import main.java.Camping.Reservation;
 import main.java.Camping.ReservationID;
 import main.java.Database.Database;
 import main.java.Database.ReservationData;
@@ -14,6 +15,7 @@ import main.java.Database.SiteData;
 import main.java.Shopping.ShoppingItemManager;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 
 public class App extends Application {
@@ -28,6 +30,11 @@ public class App extends Application {
 
 
     //Public things:-------------------------------------
+
+    //These two LocalDates are for when you select a date on the scheduling page. These are used by NewReservationWindow to autofill the date boxes
+    public static LocalDate newReservationStart;
+    public static LocalDate newReservationEnd;
+
 
     //Database stuff
     public static Database database = new Database();

@@ -1,6 +1,29 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
+    <inspection_tool class="CssUnknownProperty" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myCustomPropertiesEnabled" value="true" />
+      <option name="myIgnoreVendorSpecificProperties" value="false" />
+      <option name="myCustomPropertiesList">
+        <value>
+          <list size="13">
+            <item index="0" class="java.lang.String" itemvalue="-secondary" />
+            <item index="1" class="java.lang.String" itemvalue="-secondaryvairant" />
+            <item index="2" class="java.lang.String" itemvalue="-background" />
+            <item index="3" class="java.lang.String" itemvalue="-backgroundvairant" />
+            <item index="4" class="java.lang.String" itemvalue="-primaryvariant" />
+            <item index="5" class="java.lang.String" itemvalue="-primary" />
+            <item index="6" class="java.lang.String" itemvalue="-error" />
+            <item index="7" class="java.lang.String" itemvalue="-onprimary" />
+            <item index="8" class="java.lang.String" itemvalue="-onsecondary" />
+            <item index="9" class="java.lang.String" itemvalue="-onbackground" />
+            <item index="10" class="java.lang.String" itemvalue="-onbackgroundvairant" />
+            <item index="11" class="java.lang.String" itemvalue="-onsurface" />
+            <item index="12" class="java.lang.String" itemvalue="-onerror" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
     <inspection_tool class="SqlDialectInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SqlNoDataSourceInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="UNCHECKED_WARNING" enabled="false" level="WARNING" enabled_by_default="false" />

@@ -23,7 +23,7 @@ public class Data {
 
     public static void connect() {
         try {
-            conn = DriverManager.getConnection("jdbc:derby:CCDB;");
+            conn = DriverManager.getConnection("jdbc:derby:CCDB;create=true");
             conn.setAutoCommit(true);
         } catch (Exception e) {
 //            try {

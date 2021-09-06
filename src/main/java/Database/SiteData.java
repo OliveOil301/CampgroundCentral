@@ -14,8 +14,8 @@ public class SiteData extends Data {
 
 
     public SiteData() {
-        connect();
         driver();
+        connect();
 
     }
 
