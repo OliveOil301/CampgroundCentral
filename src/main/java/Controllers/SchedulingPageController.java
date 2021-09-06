@@ -561,6 +561,7 @@ public class SchedulingPageController {
         }
         LocalDate today = LocalDate.now();
         for (Reservation r:reservations) {
+
             if(r.getStartDate().isEqual(today) || r.getStartDate().isAfter(today)){//If this reservation has not passed
                 LocalDate startDate = r.getStartDate();
                 if(today.isBefore(startDate)){
@@ -572,7 +573,12 @@ public class SchedulingPageController {
                 }
                 today = today.plusDays(r.getStartDate().compareTo(r.getEndDate()));
                 endBox.getChildren().add(makeReservationButton(r));
+                System.out.println("WE MADE A RESERVATION BUTTON------------------------------------");
             }
+        }
+        while(today.isBefore(LocalDate.now().plusDays(daysToDisplay))){
+            endBox.getChildren().add(makeOpenReservationButton(1));
+            today = today.plusDays(1);
         }
         return new HBox();
     }
@@ -596,6 +602,10 @@ public class SchedulingPageController {
                 today = today.plusDays(r.getStartDate().compareTo(r.getEndDate()));
                 endBox.getChildren().add(makeReservationButton(r));
             }
+        }
+        while(today.isBefore(LocalDate.now().plusDays(daysToDisplay))){
+            endBox.getChildren().add(makeOpenReservationButton(1));
+            today = today.plusDays(1);
         }
         return new HBox();
     }

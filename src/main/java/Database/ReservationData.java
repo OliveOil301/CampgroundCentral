@@ -72,7 +72,22 @@ public class ReservationData extends Data {
 
     private LocalDate getDateFromString(String date) {
         // Date is in format dd/mm/yyyy with slashes
-        return LocalDate.of(Integer.parseInt(date.substring(6, 9)), Integer.parseInt(date.substring(3, 4)), Integer.parseInt(date.substring(0, 1)));
+        int day;
+        int month;
+        int year;
+        if(Integer.parseInt(date.substring(3, 4)) == 0){
+            month = Integer.parseInt(date.substring(4, 5));
+        } else {
+            month = Integer.parseInt(date.substring(3, 5));
+        }
+        if(Integer.parseInt(date.substring(0, 1)) == 0){
+            day = Integer.parseInt(date.substring(1, 2));
+        } else {
+            day = Integer.parseInt(date.substring(0, 2));
+        }
+        year = Integer.parseInt(date.substring(6, 10));
+
+        return LocalDate.of(year, month, day);
     }
 
     private String getStringFromLocalDate(LocalDate date) {
