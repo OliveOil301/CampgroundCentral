@@ -156,6 +156,9 @@
                                        <children>
                                           <HBox fx:id="DateRangeHBox" prefHeight="100.0" prefWidth="1562.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
+                                       <padding>
+                                          <Insets left="2.0" />
+                                       </padding>
                                     </AnchorPane>
                                  </content>
                               </ScrollPane>
