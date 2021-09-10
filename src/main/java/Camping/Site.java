@@ -76,9 +76,6 @@ public class Site {
      * @return true if the site is available for this stretch of days
      */
     public boolean isAvailable(LocalDate start, LocalDate end){
-        if(listOfReservations == null){
-            return true;
-        }
         for (Reservation r:this.listOfReservations){
             LocalDate D = r.getStartDate();
             while(D.isBefore(r.getEndDate()) || D.isEqual(r.getEndDate())) {

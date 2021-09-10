@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,8 +24,10 @@ public class ReservationData extends Data {
         String str = "select * from Reservations";
         ReservationID rID = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(str);
-            ResultSet rs = ps.executeQuery();
+            Statement stmt = conn.createStatement();
+            //Query to retrieve records
+            //Executing the query
+            ResultSet rs = stmt.executeQuery(str);
             while (rs.next()) {
                 String[] reservationData = new String[12];
                 reservationData[0] = rs.getString("reservationID");
@@ -40,27 +43,18 @@ public class ReservationData extends Data {
                 reservationData[10] = rs.getString("camperModel");
                 reservationData[11] = rs.getString("camperLicense");
 
-                if (rID == null) {
-                    rID = new ReservationID(reservationData[0]);
-                } else {
-                    ReservationID rIDNew = new ReservationID(reservationData[0]);
-                    if (rIDNew.isMoreThan(rID)) {
-                        rID = rIDNew;
-                    }
-                }
                 ReservationID ID = new ReservationID(reservationData[0]);
                 ArrayList<Guest> guestList = getGuestsFromID(ID);
 
+                if (ID.isMoreThan(App.reservationID)) {
+                    App.reservationID = ID;
+                }
+
                 Reservation r = new Reservation(ID, getDateFromString(reservationData[1]), getDateFromString(reservationData[2]), reservationData[3], getSplitName(reservationData[4]), reservationData[5], guestList, reservationData[6], reservationData[7], reservationData[8], reservationData[9], reservationData[10], reservationData[11]);
-                App.groupManager.addReservation(r);
+                App.groupManager.addReservation(r, false);
             }
             rs.close();
-            ps.close();
-            if (rID != null) {
-                App.reservationID = rID.plusOne();
-            } else {
-                App.reservationID = new ReservationID("000000");
-            }
+            stmt.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -176,5 +170,10 @@ public class ReservationData extends Data {
             e.printStackTrace();
             System.out.println("Failed to add edge");
         }
+    }
+
+
+    private void setLastReservationID(){
+
     }
 }

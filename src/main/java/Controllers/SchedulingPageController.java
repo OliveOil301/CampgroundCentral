@@ -157,7 +157,7 @@ public class SchedulingPageController {
             }
         }
 
-        LocalDate endingDate = date.plusDays(daysToDisplay+1);
+        LocalDate endingDate = date.plusDays(daysToDisplay);
 
         //This is just a font I use multiple times
         Font textFont = Font.font("System", FontWeight.BOLD, null, 20);
@@ -166,15 +166,15 @@ public class SchedulingPageController {
 
         //Setting up a bunch of stuff so the first run through actually has items to work with. they will soon get written over.
         HBox dateBox = new HBox();
-        VBox monthVBox = new VBox();
-        HBox monthNameHBox = new HBox();
-        Rectangle horizontalBoi = new Rectangle();
-        Rectangle verticalBoi1 = new Rectangle();
-        Label monthLabel = new Label();
+        VBox monthVBox;
+        HBox monthNameHBox;
+        Rectangle horizontalBoi;
+        Rectangle verticalBoi1;
+        Label monthLabel;
 
         //This while loop is for filling up the dates on the top
         while(date.isBefore(endingDate)){
-            if(currentMonth.compareTo(date.getMonth()) != 0 || date.plusDays(1).isEqual(endingDate)){
+            if(currentMonth.compareTo(date.getMonth()) != 0){
                 monthVBox = new VBox();
                 monthNameHBox = new HBox();
                 monthLabel = new Label();
@@ -188,7 +188,7 @@ public class SchedulingPageController {
                 horizontalBoi.setHeight(4);
                 horizontalBoi.setWidth(10);
                 horizontalBoi.setFill(new Color(0.8, 0.8, 0.8, 1));
-                horizontalBoi.setWidth(dateBox.getChildren().size()*18);
+                horizontalBoi.setWidth(dateBox.getChildren().size()*19.5);
 
 
                 verticalBoi1 = new Rectangle();
@@ -205,7 +205,7 @@ public class SchedulingPageController {
                 monthVBox.getChildren().add(horizontalBoi);
                 monthVBox.getChildren().add(dateBox);
 
-                //This addes the whole month to the main thing
+                //This adds the whole month to the main thing
                 DateRangeHBox.getChildren().add(monthVBox);
                 DateRangeHBox.setPadding(new Insets(0, 0, 0, -2));
 
@@ -243,18 +243,21 @@ public class SchedulingPageController {
             }
             dayOfWeek.setText(day);
             dayOfWeek.setFont(textFont);
-            dayOfWeek.setPrefWidth(80);
+            dayOfWeek.setPrefWidth(35);
+            dayOfWeek.setMaxWidth(35);
             dayOfWeek.setAlignment(Pos.TOP_CENTER);
             dateOfMonth.setText(String.valueOf(date.getDayOfMonth()));
             dateOfMonth.setFont(textFont);
-            dateOfMonth.setPrefWidth(80);
+            dateOfMonth.setPrefWidth(35);
+            dateOfMonth.setMaxHeight(35);
             dateOfMonth.setAlignment(Pos.TOP_CENTER);
             dateDayBox.getChildren().add(dayOfWeek);
             dateDayBox.getChildren().add(dateOfMonth);
             dateDayBox.setAlignment(Pos.TOP_CENTER);
-            dateDayBox.setMinWidth(25);
-            dateDayBox.setSpacing(3);
-            dateDayBox.setPadding(new Insets(0,1,0,0));
+            dateDayBox.setMinWidth(35);
+            dateDayBox.setPrefWidth(35);
+            dateDayBox.setMaxWidth(35);
+            dateDayBox.setSpacing(0);
 
             Rectangle verticalBoi = new Rectangle();
             verticalBoi.setHeight(65);
@@ -265,157 +268,12 @@ public class SchedulingPageController {
 
             dateBox.getChildren().add(verticalBoi);
             dateBox.getChildren().add(dateDayBox);
-            dateBox.setSpacing(3);
-
+            dateBox.setMinWidth(35);
+            dateBox.setMaxWidth(35);
+            dateBox.setPrefWidth(35);
             date = date.plusDays(1);
         }
 
-
-
-//        BufferedReader br2 = new BufferedReader(new FileReader("src/main/resources/storage/Sites.csv"));
-//        String line2;
-//
-//        String prevArea1 = "";
-//        //This while loop is for filling up the reservation loop.
-//        while ((line2 = br2.readLine()) != null) {
-//            String[] site = line2.split(splitBy);
-//            if(site.length >3){
-//                if(!prevArea1.equals(site[0])){//If this is the beginning of a new set of sites
-//                    Separator newSeparator = new Separator();//This is the separator for the label
-//                    newSeparator.setId("New Separator " + site[0]);
-//                    newSeparator.setPrefWidth(350);
-//
-//                    Label newArea = new Label();
-//                    newArea.setText(site[0]);
-//                    newArea.setPrefHeight(40);
-//                    newArea.setPadding(new Insets(5,0,-2,10));
-//                    newArea.setId(site[0] + " Title");
-//                    newArea.setFont(Font.font("System", FontWeight.BOLD, 36));
-//
-//                    mainReservationVBox.getChildren().add(newSeparator);
-//                    mainReservationVBox.getChildren().add(newArea);
-//
-////                    LocationBox.getChildren().add(newSeparator);//These actually add the formatted label and separator
-////                    LocationBox.getChildren().add(newArea);
-//                }
-//
-//
-//
-//                HBox siteReservations = new HBox();
-//                double totalReservationsLength = 0;
-//                LocalDate lastDate = LocalDate.now();
-//                double buttonHeight = 37;
-//                for(int i = 3; i<=site.length; i++) {
-//                    if(i != site.length){
-//                        String split = "#";
-//                        String[] reservation = site[i].split(split);
-//
-//
-//                        //Date shit
-//                        String[] startDate = reservation[1].split("-");
-//                        String[] endDate = reservation[2].split("-");
-//                        LocalDate reservationStart;
-//                        LocalDate reservationEnd;
-//                        System.out.println(site[i]);
-//                        System.out.println(Arrays.toString(reservation));
-//                        reservationStart = LocalDate.of(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[0]), Integer.parseInt(startDate[1]));
-//                        reservationEnd = LocalDate.of(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[0]), Integer.parseInt(endDate[1]));
-//
-//                        LocalDate today = LocalDate.now();
-//
-//                        int reservationLength;
-//                        if (reservationStart.isBefore(today)) {
-//                            reservationLength = dateDifference(today, reservationEnd) + 1;
-//                        } else {
-//                            reservationLength = dateDifference(reservationStart, reservationEnd) + 1;
-//                        }
-//                        System.out.println("THE LENGTH OF THE RESERVATION IS " + reservationLength);
-//
-//
-//                        //If there is a gap in between reservations--
-//                        if (lastDate.isBefore(reservationStart) && dateDifference(lastDate, reservationStart) > 1) {
-//                            HBox emptyReservationBox = new HBox();
-//                            Button emptyReservationButton = new Button();
-//                            int emptyReservationLength = dateDifference(lastDate, reservationStart) - 1;
-//                            if (emptyReservationLength <= 1) {
-//                                emptyReservationButton.setText("");
-//                            } else {
-//                                emptyReservationButton.setText("Open");
-//                            }
-//                            emptyReservationButton.setBackground(new Background(new BackgroundFill(new Color(0.314, 0.72, 0.325, 1), new CornerRadii(3), new Insets(0, 0, 0, 0))));
-//                            double emptyReservationTotalLength = (emptyReservationLength * 37.35) - 10.0;
-//                            emptyReservationButton.setPrefSize((emptyReservationTotalLength), buttonHeight);
-//                            emptyReservationBox.setPadding(new Insets(3, 3, 3, 3));
-//                            emptyReservationBox.getChildren().add(emptyReservationButton);
-//                            siteReservations.getChildren().add(emptyReservationBox);
-//                            System.out.println("THE LENGTH OF THE EMPTY **** RESERVATION IS " + emptyReservationLength);
-//                            totalReservationsLength += emptyReservationTotalLength + 6;
-//
-//                        }
-//
-//                        //more reservation formatting---
-//                        HBox reservationBox = new HBox();
-//                        Button reservationButton = new Button();
-//                        if (reservationLength == 1) {
-//                            reservationButton.setText("");
-//                        } else if (reservationLength <= 2) {
-//                            reservationButton.setText(reservation[0]);
-//                        } else if (reservationLength <= 3) {
-//                            reservationButton.setText("Res #" + reservation[0]);
-//                        }else {
-//                            reservationButton.setText("Reservation #" + reservation[0]);
-//                        }
-//                        reservationButton.setBackground(new Background(new BackgroundFill(new Color(0.878, 0.243, 0.243, 1), new CornerRadii(3), new Insets(0, 0, 0, 0))));
-//                        double totalLength = (reservationLength * 36.04)-7.2;
-//                        reservationButton.setPrefSize(totalLength, buttonHeight);
-//                        reservationBox.setPadding(new Insets(3, 3, 3, 3));
-//                        reservationBox.getChildren().add(reservationButton);
-//
-//                        siteReservations.getChildren().add(reservationBox);
-//                        lastDate = reservationEnd;
-//                        totalReservationsLength += totalLength + 6;
-//
-//                    } else {//If we have reached the end of the reservations
-//                        String split = "#";
-//                        String[] reservation = site[i-1].split(split);
-//
-//
-//                        //Date shit
-//                        String[] startDate1 = reservation[1].split("-");
-//                        String[] endDate1 = reservation[2].split("-");
-//                        LocalDate lastReservationStart;
-//                        LocalDate lastReservationEnd;
-//                        System.out.println(site[i-1]);
-//                        System.out.println(Arrays.toString(reservation));
-//                        lastReservationStart = LocalDate.of(Integer.parseInt(startDate1[2]), Integer.parseInt(startDate1[0]), Integer.parseInt(startDate1[1]));
-//                        lastReservationEnd = LocalDate.of(Integer.parseInt(endDate1[2]), Integer.parseInt(endDate1[0]), Integer.parseInt(endDate1[1]));
-//                        if(lastReservationEnd.isBefore(endingDate)){
-//                            HBox emptyReservationBox = new HBox();
-//                            Button emptyReservationButton = new Button();
-//                            int emptyReservationLength = dateDifference(lastReservationEnd, endingDate);
-//                            if (emptyReservationLength <= 1) {
-//                                emptyReservationButton.setText("");
-//                            } else {
-//                                emptyReservationButton.setText("Open");
-//                            }
-//                            emptyReservationButton.setBackground(new Background(new BackgroundFill(new Color(0.314, 0.72, 0.325, 1), new CornerRadii(3), new Insets(0, 0, 0, 0))));
-//                            emptyReservationButton.setPrefSize(((daysToDisplay*36)-totalReservationsLength)-22, buttonHeight);
-//                            emptyReservationBox.setPadding(new Insets(3, 3, 3, 3));
-//                            emptyReservationBox.getChildren().add(emptyReservationButton);
-//                            siteReservations.getChildren().add(emptyReservationBox);
-//                            System.out.println("THE LENGTH OF THE EMPTY **** RESERVATION IS " + emptyReservationLength + " AND THE WIDTH IS supposed to be " + emptyReservationButton.getPrefWidth() + " But the actual width is " + emptyReservationButton.getWidth());
-//                            reservationAnchorPane.setPrefWidth(daysToDisplay*36);
-//                        }
-//
-//
-//
-//                    }
-//                }
-//                prevArea1 = site[0];//This is for the location titles above the specific types of sites
-//                mainReservationVBox.getChildren().add(siteReservations);
-//            }
-//
-//        }
 
         loadReservations(LocalDate.now().plusDays(daysToDisplay+1));
 
@@ -502,8 +360,8 @@ public class SchedulingPageController {
 
             for (Site s:g.getSitesInGroup()) {
                 HBox reservationsBox = new HBox();
-                reservationsBox.setSpacing(3);
-                reservationsBox.setPadding(new Insets(2, 0, 5, 3));
+                reservationsBox.setSpacing(4);
+                reservationsBox.setPadding(new Insets(2, 0, 5, 4));
                 if(s.getListOfReservations().size() == 0){
                     reservationsBox.getChildren().add(makeOpenReservationButton(daysToDisplay));//Adding the open day button to the Hbox
                 } else {
@@ -551,8 +409,8 @@ public class SchedulingPageController {
     private HBox showExpandedView(Site s) throws InvalidSiteException {
         ArrayList<Reservation> reservations = App.groupManager.getSiteFromString(s.getSiteName()).getListOfReservations();
         HBox endBox = new HBox();
-        endBox.setSpacing(3);
         endBox.setPadding(new Insets(2, 0, 5, -1));
+        endBox.setSpacing(4);
         if(reservations == null || reservations.size() == 0){
             LocalDate today = LocalDate.now();
             while(!today.isAfter(LocalDate.now().plusDays(daysToDisplay))){
@@ -567,12 +425,12 @@ public class SchedulingPageController {
             if(r.getStartDate().isEqual(today) || r.getStartDate().isAfter(today)){//If this reservation has not passed
                 LocalDate startDate = r.getStartDate();
                 if(today.isBefore(startDate)){
-                    while(today.isBefore(r.getStartDate())){
+                    while(today.plusDays(1).isBefore(r.getStartDate())){
                         endBox.getChildren().add(makeOpenReservationButton(today));
                         today = today.plusDays(1);
                     }
                 }
-                today = today.plusDays(r.getStartDate().compareTo(r.getEndDate()));
+                today = today.plusDays((int) Duration.between(r.getStartDate().atTime(1, 1), r.getEndDate().atTime(1, 1)).toDays());
                 endBox.getChildren().add(makeReservationButton(r));
             }
         }
@@ -586,7 +444,7 @@ public class SchedulingPageController {
     private HBox showCompressedView(Site s) throws InvalidSiteException {
         ArrayList<Reservation> reservations = App.groupManager.getSiteFromString(s.getSiteName()).getListOfReservations();
         HBox endBox = new HBox();
-        endBox.setSpacing(3);
+        endBox.setSpacing(4);
         endBox.setPadding(new Insets(2, 0, 5, -1));
         if (reservations == null || reservations.size() == 0) {
             endBox.getChildren().add(makeOpenReservationButton(daysToDisplay));
@@ -664,9 +522,9 @@ public class SchedulingPageController {
         open.setMinHeight(35);
         open.setPrefHeight(35);
         open.setMaxHeight(35);
-        open.setMinWidth((days*33)+((days)*2));
-        open.setPrefWidth((days*33)+((days)*2));
-        open.setMaxWidth((days*33)+((days)*2));
+        open.setMinWidth((days*35)+((days-1)*4));
+        open.setPrefWidth((days*35)+((days-1)*4));
+        open.setMaxWidth((days*35)+((days-1)*4));
         return open;
     }
 
@@ -683,9 +541,9 @@ public class SchedulingPageController {
                     handleNewReservationButton();
                 }
         );
-        open.setMinWidth(33);
-        open.setPrefWidth(33);
-        open.setMaxWidth(33);
+        open.setMinWidth(35);
+        open.setPrefWidth(35);
+        open.setMaxWidth(35);
 
         return open;
     }
@@ -706,8 +564,8 @@ public class SchedulingPageController {
                     //TODO: Make the viewing Reservation stuff here
                 }
         );
-        int reservationDays = r.getEndDate().compareTo(r.getStartDate())+1;
-        int buttonLength = (33*(reservationDays)+((reservationDays)*2));
+        int reservationDays = (int) Duration.between(r.getStartDate().atTime(1, 1), r.getEndDate().atTime(1, 1)).toDays()+1;
+        int buttonLength = (35*(reservationDays)+((reservationDays-1)*4));
         reserved.setMinWidth(buttonLength);
         reserved.setPrefWidth(buttonLength);
         reserved.setMaxWidth(buttonLength);

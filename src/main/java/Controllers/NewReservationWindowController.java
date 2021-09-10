@@ -210,7 +210,7 @@ public class NewReservationWindowController {
             customerName[1] = lastNameBox.getText();
             Reservation r = new Reservation(startDateBox.getValue(), endDateBox.getValue(), siteComboBox.getValue(), customerName, phoneNumberBox.getText(), vehicleMakeBox.getText(), vehicleModelBox.getText(), vehicleLicenseBox.getText(), camperMakeBox.getText(), camperModelBox.getText(), camperLicenseBox.getText() );
             r.setToNextID();
-            App.groupManager.addReservation(r);
+            App.groupManager.addReservation(r, true);
             System.out.println("We submitted??");
             //No point in retyping this code
             handleCancelButton();

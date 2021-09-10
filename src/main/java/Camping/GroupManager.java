@@ -72,13 +72,15 @@ public class GroupManager {
      * addReservation adds a reservation to it's respective site in the groupManager object
      * @param r
      */
-    public void addReservation(Reservation r){
+    public void addReservation(Reservation r, boolean addTodatabase){
         for (Group g: this.groups) {
             if(g.getGroupName().equals(r.getSiteGroupName())){
                 for (Site s:g.getSitesInGroup()) {
                     if(s.getSiteName().equals(r.getSiteName())){
                         s.addReservation(r);
-                        App.reservationData.addReservationToDatabase(r);
+                        if(addTodatabase){
+                            App.reservationData.addReservationToDatabase(r);
+                        }
                     }
                 }
             }
