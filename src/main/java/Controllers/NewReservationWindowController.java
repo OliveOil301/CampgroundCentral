@@ -205,9 +205,8 @@ public class NewReservationWindowController {
     @FXML
     private void handleSaveAndExitButton() throws IOException, InvalidReservationIDException {
         if(goodForSubmission()){
-            String[] customerName = new String[2];
-            customerName[0] = firstNameBox.getText();
-            customerName[1] = lastNameBox.getText();
+            String customerName = firstNameBox.getText() + lastNameBox.getText();
+
             Reservation r = new Reservation(startDateBox.getValue(), endDateBox.getValue(), siteComboBox.getValue(), customerName, phoneNumberBox.getText(), vehicleMakeBox.getText(), vehicleModelBox.getText(), vehicleLicenseBox.getText(), camperMakeBox.getText(), camperModelBox.getText(), camperLicenseBox.getText() );
             r.setToNextID();
             App.groupManager.addReservation(r, true);

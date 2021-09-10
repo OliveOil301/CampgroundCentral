@@ -50,7 +50,7 @@ public class ReservationData extends Data {
                     App.reservationID = ID;
                 }
 
-                Reservation r = new Reservation(ID, getDateFromString(reservationData[1]), getDateFromString(reservationData[2]), reservationData[3], getSplitName(reservationData[4]), reservationData[5], guestList, reservationData[6], reservationData[7], reservationData[8], reservationData[9], reservationData[10], reservationData[11]);
+                Reservation r = new Reservation(ID, getDateFromString(reservationData[1]), getDateFromString(reservationData[2]), reservationData[3], reservationData[4], reservationData[5], guestList, reservationData[6], reservationData[7], reservationData[8], reservationData[9], reservationData[10], reservationData[11]);
                 App.groupManager.addReservation(r, false);
             }
             rs.close();
@@ -157,7 +157,7 @@ public class ReservationData extends Data {
             ps.setString(2, getStringFromLocalDate(r.getStartDate()));
             ps.setString(3, getStringFromLocalDate(r.getEndDate()));
             ps.setString(4, r.getSiteName());
-            ps.setString(5, r.getCustomerName()[0] + " " + r.getCustomerName()[1]);
+            ps.setString(5, r.getCustomerName());
             ps.setString(6, r.getPhoneNumber());
             ps.setString(7, r.getVehicleMake());
             ps.setString(8, r.getVehicleModel());

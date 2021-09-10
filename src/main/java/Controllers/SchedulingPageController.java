@@ -33,6 +33,7 @@ import java.time.Month;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class SchedulingPageController {
@@ -556,7 +557,7 @@ public class SchedulingPageController {
         reserved.setMinHeight(35);
         reserved.setPrefHeight(35);
         reserved.setMaxHeight(35);
-        reserved.setText(r.getCustomerName()[0]);
+        reserved.setText(r.getCustomerName());
         reserved.setId(r.getReservationID().getAlphanumericCode());
         reserved.setOnAction(
                 event -> {

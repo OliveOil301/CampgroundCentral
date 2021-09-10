@@ -11,7 +11,7 @@ public class Reservation {
     private LocalDate startDate;
     private LocalDate endDate;
     private String siteName;
-    private String[] customerName;
+    private String customerName;
     private String phoneNumber;
     private ArrayList<Guest> guestList;
     private String vehicleMake;
@@ -32,7 +32,7 @@ public class Reservation {
         return endDate;
     }
 
-    public String[] getCustomerName() {
+    public String getCustomerName() {
         return customerName;
     }
 
@@ -86,7 +86,7 @@ public class Reservation {
         this.endDate = endDate;
     }
 
-    public void setCustomerName(String[] customerName) {
+    public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
@@ -132,7 +132,7 @@ public class Reservation {
 
     }
 
-    public Reservation(ReservationID reservationID, LocalDate startDate, LocalDate endDate, String siteName, String[] customerName, String phoneNumber, ArrayList<Guest> guestList, String vehicleMake, String vehicleModel, String vehicleLicense, String camperMake, String camperModel, String camperLicense) {
+    public Reservation(ReservationID reservationID, LocalDate startDate, LocalDate endDate, String siteName, String customerName, String phoneNumber, ArrayList<Guest> guestList, String vehicleMake, String vehicleModel, String vehicleLicense, String camperMake, String camperModel, String camperLicense) {
         this.reservationID = reservationID;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -148,7 +148,7 @@ public class Reservation {
         this.camperLicense = camperLicense;
     }
 
-    public Reservation(LocalDate startDate, LocalDate endDate, String siteName, String[] customerName, String phoneNumber, String vehicleMake, String vehicleModel, String vehicleLicense, String camperMake, String camperModel, String camperLicense) {
+    public Reservation(LocalDate startDate, LocalDate endDate, String siteName, String customerName, String phoneNumber, String vehicleMake, String vehicleModel, String vehicleLicense, String camperMake, String camperModel, String camperLicense) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.siteName = siteName;
