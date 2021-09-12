@@ -13,8 +13,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.java.App;
@@ -30,6 +33,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class NewReservationWindowController {
+
+    @FXML
+    private HBox overallHBox;
 
     //The input fields start here:-------------------
     @FXML
@@ -155,7 +161,6 @@ public class NewReservationWindowController {
             }
         });
 
-
         // Filling up the combo box with the sites.
         setSites();
 
@@ -170,6 +175,9 @@ public class NewReservationWindowController {
 
         //This sets the date and site if an open day is clicked in the scheduling page
         setPreFilledData();
+
+        //This add the reservationWizard pane to this window
+        addReservationWizardPane();
     }
 
 
@@ -452,6 +460,11 @@ public class NewReservationWindowController {
         setListener(stateComboBox);
         setListener(zipCodeBox);
         setListener(emailBox);
+
+        //This is the listener for the ReservationWizard
+        App.needToUpdate.addListener((observable, oldValue, newValue) -> {
+            setPreFilledData();
+        });
     }
 
     private boolean siteIsOpenThatPeriod(String s, LocalDate start, LocalDate end) throws InvalidSiteException {
@@ -472,6 +485,18 @@ public class NewReservationWindowController {
             startDateBox.setValue(App.newReservationStart);
             App.newReservationSite = null;
             App.newReservationStart = null;
+            if(App.newReservationEnd != null) {
+                endDateBox.setValue(App.newReservationEnd);
+                App.newReservationEnd = null;
+            }
         }
+
+
+    }
+
+
+    private void addReservationWizardPane() throws IOException {
+        AnchorPane root = FXMLLoader.load(getClass().getResource("/main/resources/views/ReservationWizardPane.fxml"));
+        overallHBox.getChildren().add(root);
     }
 }

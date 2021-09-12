@@ -1,6 +1,7 @@
 package main.java;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,8 +32,10 @@ public class App extends Application {
 
     //Public things:-------------------------------------
 
-    //These two LocalDates are for when you select a date on the scheduling page. These are used by NewReservationWindow to autofill the date boxes
+    //These are for when you select a date on the scheduling page or when you use the reservationWizard. These are used by NewReservationWindow to autofill the boxes
+    public static SimpleBooleanProperty needToUpdate = new SimpleBooleanProperty(false);
     public static LocalDate newReservationStart;
+    public static LocalDate newReservationEnd;
     public static String newReservationSite;
     public static Reservation viewingReservation;
 
