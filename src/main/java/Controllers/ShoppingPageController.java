@@ -22,13 +22,13 @@ public class ShoppingPageController {
 
     @FXML
     private void handleNewReservationButton() throws IOException {
-        if(App.newReservationWindows == 0) {
+        if(!App.newReservationWindows) {
             App.newReservationStage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/main/resources/views/NewReservationWindow.fxml"));
             Scene scene = new Scene(root);
             App.newReservationStage.setScene(scene);
             App.newReservationStage.show();
-            App.newReservationWindows += 1;
+            App.newReservationWindows = true;
         }
     }
 }

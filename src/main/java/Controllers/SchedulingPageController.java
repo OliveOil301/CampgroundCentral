@@ -296,17 +296,6 @@ public class SchedulingPageController {
     }//End of initialize-----
 
 
-    private int dateDifference(LocalDate start, LocalDate end){
-        int i = 0;
-        if(end.isBefore(start)||end.isEqual(start)){
-            return i;
-        }
-        while(!start.isEqual(end)){
-            start = start.plusDays(1);
-            i = i + 1;
-        }
-        return i;
-    }
 
 
     private void handleReservationScrolledH(){
@@ -328,18 +317,18 @@ public class SchedulingPageController {
 
     @FXML
     private void handleNewReservationButton(){
-        if(App.newReservationWindows == 0) {
+        if(!App.newReservationWindows || !App.newReservationStage.isShowing()) {
             App.newReservationStage = new Stage();
             Parent root = null;
             try {
                 root = FXMLLoader.load(getClass().getResource("/main/resources/views/NewReservationWindow.fxml"));
+                Scene scene = new Scene(root);
+                App.newReservationStage.setScene(scene);
+                App.newReservationStage.show();
+                App.newReservationWindows = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Scene scene = new Scene(root);
-            App.newReservationStage.setScene(scene);
-            App.newReservationStage.show();
-            App.newReservationWindows += 1;
         }
     }
 
@@ -415,7 +404,7 @@ public class SchedulingPageController {
         if(reservations == null || reservations.size() == 0){
             LocalDate today = LocalDate.now();
             while(!today.isAfter(LocalDate.now().plusDays(daysToDisplay))){
-                endBox.getChildren().add(makeOpenReservationButton(today));
+                endBox.getChildren().add(makeOpenReservationButton(today, s.getSiteName()));
                 today = today.plusDays(1);
             }
             return endBox;
@@ -426,17 +415,17 @@ public class SchedulingPageController {
             if(r.getStartDate().isEqual(today) || r.getStartDate().isAfter(today)){//If this reservation has not passed
                 LocalDate startDate = r.getStartDate();
                 if(today.isBefore(startDate)){
-                    while(today.plusDays(1).isBefore(r.getStartDate())){
-                        endBox.getChildren().add(makeOpenReservationButton(today));
+                    while(today.isBefore(r.getStartDate())){
+                        endBox.getChildren().add(makeOpenReservationButton(today, s.getSiteName()));
                         today = today.plusDays(1);
                     }
                 }
-                today = today.plusDays((int) Duration.between(r.getStartDate().atTime(1, 1), r.getEndDate().atTime(1, 1)).toDays());
+                today = today.plusDays((int) Duration.between(r.getStartDate().atTime(1, 1), r.getEndDate().plusDays(1).atTime(1, 1)).toDays());
                 endBox.getChildren().add(makeReservationButton(r));
             }
         }
         while(today.isBefore(LocalDate.now().plusDays(daysToDisplay))){
-            endBox.getChildren().add(makeOpenReservationButton(today));
+            endBox.getChildren().add(makeOpenReservationButton(today, s.getSiteName()));
             today = today.plusDays(1);
         }
         return endBox;
@@ -529,7 +518,7 @@ public class SchedulingPageController {
         return open;
     }
 
-    private Button makeOpenReservationButton(LocalDate startDate){
+    private Button makeOpenReservationButton(LocalDate startDate, String site){
         Button open = new Button();
         open.setStyle("-fx-background-color: -reservationOpen;\n" +
                 "    -fx-text-fill: black;\n");
@@ -539,6 +528,7 @@ public class SchedulingPageController {
         open.setOnAction(
                 event -> {
                     App.newReservationStart = startDate;
+                    App.newReservationSite = site;
                     handleNewReservationButton();
                 }
         );

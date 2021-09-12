@@ -24,7 +24,7 @@ public class App extends Application {
     public static Stage primaryStage;//This is the main application stage
 
     public static Stage newReservationStage;//Thi sis the stage for the new reservation window that may pop up
-    public static Integer newReservationWindows = 0;
+    public static boolean newReservationWindows = false;
 
     public static App app_instance = null;
 
@@ -33,6 +33,7 @@ public class App extends Application {
 
     //These two LocalDates are for when you select a date on the scheduling page. These are used by NewReservationWindow to autofill the date boxes
     public static LocalDate newReservationStart;
+    public static String newReservationSite;
     public static Reservation viewingReservation;
 
 

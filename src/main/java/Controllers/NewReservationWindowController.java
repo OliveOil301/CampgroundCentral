@@ -107,6 +107,9 @@ public class NewReservationWindowController {
 
 
     public void initialize() throws IOException {
+        reservationInformationFocus = new SimpleIntegerProperty(0);
+        billingInformationFocus = new SimpleIntegerProperty(0);
+
 
         //These are the listeners for the focus animations.
         reservationInformationFocus.addListener((observable, oldVal, newVal) ->{
@@ -165,6 +168,8 @@ public class NewReservationWindowController {
         //This sets the rests for the validators when you change the values
         setListeners();
 
+        //This sets the date and site if an open day is clicked in the scheduling page
+        setPreFilledData();
     }
 
 
@@ -195,7 +200,7 @@ public class NewReservationWindowController {
     @FXML
     private void handleCancelButton(){
         Stage stage = (Stage) App.newReservationStage.getScene().getWindow();
-        App.newReservationWindows -= 1;
+        App.newReservationWindows = false;
         stage.close();
 
     }
@@ -206,7 +211,6 @@ public class NewReservationWindowController {
     private void handleSaveAndExitButton() throws IOException, InvalidReservationIDException {
         if(goodForSubmission()){
             String customerName = firstNameBox.getText() + lastNameBox.getText();
-
             Reservation r = new Reservation(startDateBox.getValue(), endDateBox.getValue(), siteComboBox.getValue(), customerName, phoneNumberBox.getText(), vehicleMakeBox.getText(), vehicleModelBox.getText(), vehicleLicenseBox.getText(), camperMakeBox.getText(), camperModelBox.getText(), camperLicenseBox.getText() );
             r.setToNextID();
             App.groupManager.addReservation(r, true);
@@ -454,5 +458,20 @@ public class NewReservationWindowController {
         Site site = App.groupManager.getSiteFromString(s);
         return site.isAvailable(start, end);
 
+    }
+
+
+    /**
+     * setPreFilledData is called in the initialize of this window to pre-fill the date and site
+     * if an open day is clicked on in the scheduling page.
+     * The data is taken from App and is cleared immediately after
+     */
+    private void setPreFilledData(){
+        if(App.newReservationSite != null && App.newReservationStart != null) {
+            siteComboBox.setValue(App.newReservationSite);
+            startDateBox.setValue(App.newReservationStart);
+            App.newReservationSite = null;
+            App.newReservationStart = null;
+        }
     }
 }

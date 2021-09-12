@@ -11,6 +11,7 @@ public class Site {
     private ArrayList<Reservation> listOfReservations;
     private ArrayList<LocalDate> availableDates;
 
+
     public Site( String groupName, String siteName, String siteType) {
         this.siteName = siteName;
         this.siteType = siteType;
