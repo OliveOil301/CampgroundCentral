@@ -164,6 +164,7 @@ public class ReservationWizardPaneController {
             if(type.equals(s.getSiteType())){
                 return true;
             }
+
         }
         return false;//NEED TO CHANGE THIS
     }
